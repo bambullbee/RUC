@@ -24,6 +24,7 @@ const App = () => {
       <Link to="/">Home</Link>
       <Link to="/about">About</Link>
       <Link to="/shop">Shop</Link>
+
       <Suspense fallback={<p>Loading...</p>}>
         <Outlet />
       </Suspense>

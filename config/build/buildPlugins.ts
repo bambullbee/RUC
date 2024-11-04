@@ -4,6 +4,7 @@ import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 import type { Configuration } from "webpack";
 import webpack, { DefinePlugin } from "webpack";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
+import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
 
 import { BuildOptions } from "./types/types";
 
@@ -27,6 +28,7 @@ export function buildPlugins(options: BuildOptions): Configuration["plugins"] {
     plugins.push(new webpack.ProgressPlugin());
     //разделяет сборку и проверку типов. последний процесс запускается сразу после сборки и если то покажет ошибки
     plugins.push(new ForkTsCheckerWebpackPlugin());
+    plugins.push(new ReactRefreshWebpackPlugin());
   }
 
   if (!isDev) {

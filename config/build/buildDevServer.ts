@@ -8,5 +8,7 @@ export function buildDevServer(options: BuildOptions): DevServerConfiguration {
     open: true,
     //чтобы работал react-router-dom а именно клиентская маршрутизация, навигация с помощью js работает только для devserver, про деплой front end узнай из ролика ulbi tv
     historyApiFallback: true,
+    //hot module replacement. prevents page reloading after editting code. live-sync live-server with code
+    hot: true,
   };
 }
