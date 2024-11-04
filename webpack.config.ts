@@ -21,6 +21,7 @@ export default (env: EnvVariables) => {
     output: path.resolve(__dirname, "build"),
     html: path.resolve(__dirname, "public", "index.html"),
     src: path.resolve(__dirname, "src"),
+    public: path.resolve(__dirname, "public"),
   };
 
   const isDev = env.mode === "development";
