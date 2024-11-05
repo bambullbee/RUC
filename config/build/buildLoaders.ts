@@ -1,10 +1,14 @@
 import { ModuleOptions } from "webpack";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import { BuildOptions } from "./types/types";
+//не удалять!!!
 import ReactRefreshTypeScript from "react-refresh-typescript";
 
+import { buildBabelLoader } from "./babel/buildBabelLoader";
+
 export function buildLoaders(options: BuildOptions): ModuleOptions["rules"] {
-  const isDev = options.mode === "development";
+  const { mode } = options;
+  const isDev = mode === "development";
 
   const assetLoader = {
     test: /\.(png|jpg|jpeg|gif)$/i,
@@ -28,22 +32,24 @@ export function buildLoaders(options: BuildOptions): ModuleOptions["rules"] {
     ],
   };
 
-  const tsLoader = {
-    exclude: /node_modules/,
-    test: /\.tsx?$/,
-    use: [
-      {
-        loader: "ts-loader",
-        options: {
-          transpileOnly: true,
+  // const tsLoader = {
+  //   exclude: /node_modules/,
+  //   test: /\.tsx?$/,
+  //   use: [
+  //     {
+  //       loader: "ts-loader",
+  //       options: {
+  //         transpileOnly: true,
 
-          getCustomTransformers: () => ({
-            before: [isDev && ReactRefreshTypeScript()].filter(Boolean),
-          }),
-        },
-      },
-    ],
-  };
+  //         getCustomTransformers: () => ({
+  //           before: [isDev && ReactRefreshTypeScript()].filter(Boolean),
+  //         }),
+  //       },
+  //     },
+  //   ],
+  // };
+
+  const babelLoader = buildBabelLoader(options);
 
   //позволяет использовать свг как реакт компоненты
   const svgrLoader = {
@@ -52,5 +58,5 @@ export function buildLoaders(options: BuildOptions): ModuleOptions["rules"] {
     use: [{ loader: "@svgr/webpack", options: { icon: true } }],
   };
 
-  return [assetLoader, cssLoader, tsLoader, svgrLoader];
+  return [assetLoader, cssLoader, babelLoader, svgrLoader];
 }

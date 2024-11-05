@@ -23,7 +23,9 @@ export function buildWebpack(options: BuildOptions): webpack.Configuration {
       rules: buildLoaders(options),
     },
     resolve: buildResolvers(options),
-    devtool: isDev && "inline-source-map",
+    //source-map это инструмент, позволяющий удобно находить ошибку, открывая ее из консоли браузера! разные сурс мэпы подходят для разных по ВЕЛИЧИНЕ проектов и для разных режимов: prod/dev? build/rebuild?
+    // таблица со встроенными сурс мапами здесь https://webpack.js.org/configuration/devtool/
+    devtool: isDev ? "eval-cheap-module-source-map" : "source-map",
     devServer: isDev ? buildDevServer(options) : undefined,
   };
 }

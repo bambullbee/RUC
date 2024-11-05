@@ -12,7 +12,9 @@ import FlowerSvg from "@/assets/flower.svg";
 const App = () => {
   return (
     <>
-      <div className={classes.main}>App</div>
+      <div data-testid={"App.testid"} className={classes.main}>
+        App
+      </div>
       <div>
         <img width={200} height={100} src={FlowerPng} alt="flower" />
         <img width={200} height={100} src={FlowerJpeg} alt="flower" />

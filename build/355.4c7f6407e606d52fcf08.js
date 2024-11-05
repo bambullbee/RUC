@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkpreset=self.webpackChunkpreset||[]).push([[355],{355:(e,s,r)=>{r.r(s),r.d(s,{default:()=>n});var t=r(848);r(540);const n=function(){return(0,t.jsx)("h1",{children:"Shop"})}}}]);

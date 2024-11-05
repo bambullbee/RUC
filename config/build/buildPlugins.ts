@@ -11,8 +11,8 @@ import path from "path";
 import { BuildOptions } from "./types/types";
 
 export function buildPlugins(options: BuildOptions): Configuration["plugins"] {
-  const { paths, analyzer, platform } = options;
-  const isDev = options.mode === "development";
+  const { paths, analyzer, platform, mode } = options;
+  const isDev = mode === "development";
 
   const plugins: Configuration["plugins"] = [
     //позволяет динамично работать с автоматически генерируемым js bundle с разными названиями и добавлять их в стабильный index.html
