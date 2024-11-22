@@ -1,4 +1,5 @@
 import { createRoot } from "react-dom/client";
+import "./style.css";
 
 import App from "./components/App";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";

@@ -1,7 +1,7 @@
 import React from "react";
+import "../style.css";
 import { Suspense } from "react";
 
-import classes from "../App.module.css";
 import { Outlet, Link } from "react-router-dom";
 
 import FlowerPng from "@/assets/flower.png";
@@ -12,9 +12,8 @@ import FlowerSvg from "@/assets/flower.svg";
 const App = () => {
   return (
     <>
-      <div data-testid={"App.testid"} className={classes.main}>
-        App
-      </div>
+      <div data-testid={"App.testid"}>App</div>
+      <h1 className="text-red-500 text-3xl">Text</h1>
       <div>
         <img width={200} height={100} src={FlowerPng} alt="flower" />
         <img width={200} height={100} src={FlowerJpeg} alt="flower" />

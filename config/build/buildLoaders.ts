@@ -7,7 +7,7 @@ import ReactRefreshTypeScript from "react-refresh-typescript";
 import { buildBabelLoader } from "./babel/buildBabelLoader";
 
 export function buildLoaders(options: BuildOptions): ModuleOptions["rules"] {
-  const { mode } = options;
+  const { mode, paths } = options;
   const isDev = mode === "development";
 
   const assetLoader = {
@@ -24,11 +24,20 @@ export function buildLoaders(options: BuildOptions): ModuleOptions["rules"] {
     },
   };
 
+  // const cssLoader = {
+  //   test: /\.css$/i,
+  //   use: [
+  //     isDev ? "style-loader" : MiniCssExtractPlugin.loader,
+  //     cssLoaderWithModules,
+  //   ],
+  // }; cssLoaderWithModules DONT WORK WITH POSTCSSLOADER
+
   const cssLoader = {
     test: /\.css$/i,
     use: [
       isDev ? "style-loader" : MiniCssExtractPlugin.loader,
-      cssLoaderWithModules,
+      "css-loader",
+      "postcss-loader",
     ],
   };
 
