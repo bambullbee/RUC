@@ -5,6 +5,10 @@ import { Provider } from "react-redux";
 import { store } from "./app/store";
 import App from "./app/App";
 
+import applyTheme from "./theme";
+
+applyTheme();
+
 const root = document.getElementById("root");
 
 if (!root) {

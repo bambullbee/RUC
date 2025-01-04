@@ -2,6 +2,8 @@ import "../style.css";
 
 import Header from "@/widgets/header/index";
 import Messanger from "@/widgets/messanger/index";
+import Widget from "@/widgets/widget/index";
+import GlobalBg from "./glogalBG/components/GlobalBg";
 
 const App = () => {
   return (
@@ -9,7 +11,9 @@ const App = () => {
       <Header />
       <main>
         <Messanger />
+        <Widget />
       </main>
+      <GlobalBg />
     </>
   );
 };
