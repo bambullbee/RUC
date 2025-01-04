@@ -1,24 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-type currentLocationT = "start" | "test" | "help";
+type currentLocationT = "test" | "help";
 
-let test = 2;
-let help = 3;
-let start = 1;
-let currentLocation: currentLocationT = "start";
+let test = 1;
+let help = 2;
+let mood = 3;
+let currentLocation: currentLocationT = "test";
 
 if (localStorage.length !== 0) {
   test = parseFloat(localStorage.getItem("test"));
   help = parseFloat(localStorage.getItem("help"));
-  start = parseFloat(localStorage.getItem("start"));
   currentLocation = localStorage.getItem("currentLocation") as currentLocationT;
 }
 
 interface routesI {
   test: number;
   help: number;
-  start: number;
 }
 
 interface initialStateI {
@@ -27,7 +25,7 @@ interface initialStateI {
 }
 
 const initialState: initialStateI = {
-  routes: { test, help, start },
+  routes: { test, help },
   currentLocation,
 };
 
@@ -36,7 +34,7 @@ const navigationSlice = createSlice({
   initialState,
   reducers: {
     inPartMove(state) {
-      state.routes[currentLocation] += 0.1;
+      state.routes[currentLocation] += 0.01;
       localStorage.setItem(
         currentLocation,
         state.routes[currentLocation].toString()
