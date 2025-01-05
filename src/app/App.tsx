@@ -14,6 +14,22 @@ const App = () => {
         <Widget />
       </main>
       <GlobalBg />
+      <button
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          background: "red",
+          color: "black",
+          zIndex: 4,
+        }}
+        onClick={() => {
+          const block = document.querySelector<HTMLElement>(".dialogue-window");
+          block.scrollTop = block.scrollHeight;
+        }}
+      >
+        Press me
+      </button>
     </>
   );
 };

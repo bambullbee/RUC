@@ -422,6 +422,7 @@ button span {
 
 .messanger {
   padding: 0px 5px;
+  height: auto;
 }
 
 .sms-wrapper {
@@ -435,11 +436,21 @@ button span {
 .sms {
   margin-bottom: 2vmin;
   padding: 10px 20px;
-  max-width: 90%;
+  width: 90%;
   background-color: var(--third-HO-color);
   border: 1px solid var(--secondary-color);
   border-radius: 30px;
   transition: box-shadow 0.25s, outline 0.25s;
+  animation: pop-up-sms 0.3s cubic-bezier(0, 0.87, 0.45, 0.74);
+}
+
+@keyframes pop-up-sms {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(100%);
+  }
 }
 
 .right-sms {
@@ -449,6 +460,7 @@ button span {
 }
 
 .left-sms {
+  margin-right: 10%;
 }
 
 .choose-answer {

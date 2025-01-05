@@ -3,14 +3,15 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 
 type currentLocationT = "test" | "help";
 
-let test = 1;
-let help = 2;
-let mood = 3;
+let test = 100;
+let help = 200;
+let mood = 300;
 let currentLocation: currentLocationT = "test";
 
 if (localStorage.length !== 0) {
-  test = parseFloat(localStorage.getItem("test"));
-  help = parseFloat(localStorage.getItem("help"));
+  test = parseInt(localStorage.getItem("test"));
+  help = parseInt(localStorage.getItem("help"));
+  mood = parseInt(localStorage.getItem("mood"));
   currentLocation = localStorage.getItem("currentLocation") as currentLocationT;
 }
 
@@ -33,6 +34,7 @@ const navigationSlice = createSlice({
   name: "navigation",
   initialState,
   reducers: {
+    answerQuestion(state) {},
     inPartMove(state) {
       state.routes[currentLocation] += 0.01;
       localStorage.setItem(
