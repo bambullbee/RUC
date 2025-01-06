@@ -1,6 +1,6 @@
 import React from "react";
 
-const BgDisplay = () => {
+const Display = () => {
   return (
     <div className="phone-bg">
       <div className="section s-1">
@@ -67,4 +67,4 @@ const BgDisplay = () => {
   );
 };
 
-export default BgDisplay;
+export default Display;

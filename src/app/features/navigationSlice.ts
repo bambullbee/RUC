@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-
+// !!!!
 type currentLocationT = "test" | "help";
+// !!!!
 
 let test = 100;
 let help = 200;

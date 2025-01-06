@@ -1,11 +1,54 @@
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/app/store";
+import { Dispatch, SetStateAction } from "react";
 
 import data from "@/app/data/data";
 
 import Message from "./UI/Message";
 import Answer from "./UI/Answer";
+
+const isScrolling = { is: false };
+
+function typeFn<S>(
+  i: number,
+  t: number,
+  ie: string,
+  setState: Dispatch<SetStateAction<S>>,
+  className: string,
+  block: HTMLElement | null
+): void {
+  if (className === "right-sms") {
+    return undefined;
+  }
+  setState((prevState: S): S => {
+    const newState = prevState + ie.charAt(i);
+    return newState as S;
+  });
+
+  if (block && !isScrolling.is) {
+    block.scrollTo({ top: block.scrollHeight, behavior: "smooth" });
+  }
+  setTimeout(function () {
+    i < ie.length - 1
+      ? typeFn<S>(i + 1, t, ie, setState, className, block)
+      : false;
+  }, t);
+}
+
+function hasTouch() {
+  console.log(navigator.userAgent);
+
+  if (
+    navigator.userAgent.match(/iPhone/i) ||
+    navigator.userAgent.match(/iPad/i) ||
+    navigator.userAgent.match(/Android/i)
+  ) {
+    return true;
+  } else return false;
+}
+
+const isTouch = hasTouch();
 
 const Messanger = () => {
   const currentLocation: keyof RootState["navigation"]["routes"] = useSelector(
@@ -36,6 +79,53 @@ const Messanger = () => {
     setMessageHistory(mHistory);
   }, []);
 
+  function scrollThrottlingFn() {
+    let isThrottle = false;
+    return (e: PointerEvent) => {
+      if (!(e.target as Element).closest(".answer")) {
+        if (!isThrottle) {
+          isThrottle = true;
+          isScrolling.is = true;
+          setTimeout(() => {
+            isScrolling.is = false;
+          }, 7000);
+          setTimeout(() => {
+            isThrottle = false;
+          }, 50);
+        }
+      }
+    };
+  }
+
+  const fn = scrollThrottlingFn();
+  const fn1 = (e: Event, block: HTMLElement) => {
+    return () => {
+      if (block.scrollTop === block.scrollHeight) {
+        isScrolling.is = false;
+      }
+    };
+  };
+
+  useEffect(() => {
+    const dialogueWindow = document.querySelector(
+      ".dialogue-window"
+    ) as HTMLElement;
+    dialogueWindow.addEventListener("wheel", fn);
+    dialogueWindow.addEventListener("scroll", fn1(event, dialogueWindow));
+    if (isTouch) {
+      dialogueWindow.addEventListener("click", fn);
+    }
+    return () => {
+      dialogueWindow.removeEventListener("wheel", fn);
+      dialogueWindow.removeEventListener("scroll", fn1(event, dialogueWindow));
+      if (isTouch) {
+        dialogueWindow.removeEventListener("click", fn);
+      }
+    };
+  }, []);
+
+  // !!!!ADD CLICK EVENT FOR TOUCH SCREENS
+
   function applyNewAnswer(partIndex: any, answerIndex: any) {
     setMessageHistory((prevState: any) => {
       const newState = JSON.parse(JSON.stringify(prevState));
@@ -49,20 +139,12 @@ const Messanger = () => {
       }
       newState[partIndex].part.na = prevState[partIndex].part.na[answerIndex].a;
       newState[partIndex].part.r = prevState[partIndex].part.na[answerIndex].r;
-      // if (newState[partIndex + 1]) {
-      //   newState[partIndex + 1].isHidden = !newState[partIndex + 1].isHidden;
-      // }
       return newState;
     });
   }
 
   function changeTimeout(timeout: { t: number }, multiplier: number): void {
     timeout.t = 30 * multiplier;
-    return undefined;
-  }
-  // dev
-  function checkTimeout(...args: any[]): undefined {
-    console.log(...args);
     return undefined;
   }
   let timeout = { t: 0 };
@@ -72,8 +154,8 @@ const Messanger = () => {
         {messagesHistory.map((el: any, ind: any) => {
           return (
             <div key={ind}>
-              {/* {checkTimeout(timeout, el.part.q)} */}
               <Message
+                typeFn={typeFn}
                 className="left-sms"
                 text={el.part.q}
                 isHidden={el.isHidden}
@@ -100,6 +182,7 @@ const Messanger = () => {
               ) : (
                 <>
                   <Message
+                    typeFn={typeFn}
                     text={el.part.na}
                     className="right-sms"
                     isHidden={el.isHidden}
@@ -108,6 +191,7 @@ const Messanger = () => {
                     partIndex={el.index}
                   />
                   <Message
+                    typeFn={typeFn}
                     text={el.part.r}
                     className="left-sms"
                     isHidden={el.isHidden}

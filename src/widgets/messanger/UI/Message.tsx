@@ -1,4 +1,5 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 type className = "right-sms" | "left-sms";
 
@@ -9,36 +10,54 @@ interface MessagePropsI {
   timeout: number;
   isTyping: boolean;
   partIndex: number;
+  typeFn: <S>(
+    i: number,
+    t: number,
+    ie: string,
+    setState: Dispatch<SetStateAction<S>>,
+    className: string,
+    block: HTMLElement | null
+  ) => void;
 }
 
 const Message = memo(
-  ({ className, text, isHidden, partIndex, timeout }: MessagePropsI) => {
+  ({
+    className,
+    text,
+    isHidden,
+    partIndex,
+    timeout,
+    typeFn,
+  }: MessagePropsI) => {
+    const messageBlockRef = useRef(null);
+
     const [isDisplayed, setIsDisplayed] = useState(
       timeout === 0 ? true : false
     );
+
+    const [currentText, setCurrentText] = useState("");
+
     useEffect(() => {
+      const block = document.querySelector(".dialogue-window") as HTMLElement;
       if (!isDisplayed) {
         setTimeout(() => {
           setIsDisplayed(true);
+
+          typeFn(0, 30, text, setCurrentText, className, block);
         }, timeout);
+      } else {
+        typeFn(0, 30, text, setCurrentText, className, block);
       }
     }, []);
-    useEffect(() => {
-      if (isDisplayed) {
-        setTimeout(() => {
-          const messangerBlock = document.querySelector(".messanger");
-          console.log(messangerBlock, "scroll useEffect was fired");
-          messangerBlock.scrollTop = messangerBlock.scrollHeight;
-        }, timeout);
-      }
-    }, [isDisplayed]);
+
     return isDisplayed ? (
       <div
         className="sms-wrapper"
         style={{ display: isHidden ? "none" : "block" }}
+        ref={messageBlockRef}
       >
         <p className={`${"sms " + className}`} aria-label="Ваше сообщение">
-          {text}
+          {className === "right-sms" ? text : currentText}
         </p>
       </div>
     ) : (

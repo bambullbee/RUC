@@ -21,15 +21,7 @@ const Answer = memo(
         }, timeout);
       }
     }, []);
-    useEffect(() => {
-      if (isDisplayed) {
-        setTimeout(() => {
-          const messangerBlock = document.querySelector(".messanger");
-          console.log(messangerBlock, "scroll useEffect was fired");
-          messangerBlock.scrollTop = messangerBlock.scrollHeight;
-        }, timeout);
-      }
-    }, [isDisplayed]);
+
     return isDisplayed ? (
       <button
         onClick={() => {

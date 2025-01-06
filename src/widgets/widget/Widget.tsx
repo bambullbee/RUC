@@ -1,6 +1,6 @@
 import React from "react";
 import SvgS from "./components/SvgS";
-import BgDisplay from "./components/BgDisplay";
+import BgDisplay from "./components/Display";
 
 const WIdget = () => {
   return (

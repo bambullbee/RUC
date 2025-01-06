@@ -446,9 +446,11 @@ button span {
 
 @keyframes pop-up-sms {
   0% {
+    opacity: 1;
     transform: scale(0);
   }
   100% {
+    opacity: 1;
     transform: scale(100%);
   }
 }
@@ -460,7 +462,10 @@ button span {
 }
 
 .left-sms {
+  opacity: 0;
   margin-right: 10%;
+  animation-delay: 0.3s;
+  animation-fill-mode: forwards;
 }
 
 .choose-answer {
@@ -482,6 +487,7 @@ button span {
   background-color: var(--new-answer-HO-bg);
   transition: all 0.25s;
   outline: none;
+  animation: pop-up-sms 0.3s cubic-bezier(0, 0.87, 0.45, 0.74);
 }
 
 /* SIDES */
