@@ -4,32 +4,39 @@ import Header from "@/widgets/header/index";
 import Messanger from "@/widgets/messanger/index";
 import Widget from "@/widgets/widget/index";
 import GlobalBg from "./glogalBG/components/GlobalBg";
+import { useState } from "react";
+import Banner from "@/widgets/messanger/components/Banner";
 
 const App = () => {
+  const [isScrolling, setIsScrolling] = useState(false);
+  const [isWidgetMenu, setIsWidgetMenu] = useState(false);
   return (
     <>
-      <Header />
+      <Header setIsWidgetMenu={setIsWidgetMenu} />
       <main>
-        <Messanger />
+        <Messanger isScrolling={isScrolling} setIsScrolling={setIsScrolling} />
         <Widget />
+        <button
+          className="scroll-prevent-btn"
+          style={{
+            backgroundColor: isScrolling
+              ? "var(--primary-HO-color)"
+              : "var(--secondary-HO-color)",
+          }}
+          onClick={() => {
+            setIsScrolling((prevState) => !prevState);
+            if (isScrolling) {
+              const messangerBlock = document.querySelector(".dialogue-window");
+              messangerBlock.scrollTo({
+                top: messangerBlock.scrollHeight,
+                behavior: "smooth",
+              });
+            }
+          }}
+        ></button>
+        <Banner isScrolling={isScrolling} />
       </main>
       <GlobalBg />
-      <button
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          background: "red",
-          color: "black",
-          zIndex: 4,
-        }}
-        onClick={() => {
-          const block = document.querySelector<HTMLElement>(".dialogue-window");
-          block.scrollTop = block.scrollHeight;
-        }}
-      >
-        Press me
-      </button>
     </>
   );
 };

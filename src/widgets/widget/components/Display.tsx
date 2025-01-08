@@ -1,70 +1,17 @@
-import React from "react";
+import React, { useMemo } from "react";
+
+import Bubble from "../UI/Bubble";
 
 const Display = () => {
-  return (
-    <div className="phone-bg">
-      <div className="section s-1">
-        <div className="phone-section-bg phone-section-bg-1"></div>
-        <div className="phone-section-bg phone-section-bg-2"></div>
-        <div className="phone-section-bg phone-section-bg-3"></div>
-        <div className="phone-section-bg phone-section-bg-4"></div>
-        <div className="phone-section-bg phone-section-bg-5"></div>
-        <div className="phone-section-bg phone-section-bg-6"></div>
-        <div className="phone-section-bg phone-section-bg-7"></div>
-        <div className="phone-section-bg phone-section-bg-8"></div>
-      </div>
-      <div className="section s-2">
-        <div className="phone-section-bg phone-section-bg-1"></div>
-        <div className="phone-section-bg phone-section-bg-2"></div>
-        <div className="phone-section-bg phone-section-bg-3"></div>
-        <div className="phone-section-bg phone-section-bg-4"></div>
-        <div className="phone-section-bg phone-section-bg-5"></div>
-        <div className="phone-section-bg phone-section-bg-6"></div>
-        <div className="phone-section-bg phone-section-bg-7"></div>
-        <div className="phone-section-bg phone-section-bg-8"></div>
-      </div>
-      <div className="section s-3">
-        <div className="phone-section-bg phone-section-bg-1"></div>
-        <div className="phone-section-bg phone-section-bg-2"></div>
-        <div className="phone-section-bg phone-section-bg-3"></div>
-        <div className="phone-section-bg phone-section-bg-4"></div>
-        <div className="phone-section-bg phone-section-bg-5"></div>
-        <div className="phone-section-bg phone-section-bg-6"></div>
-        <div className="phone-section-bg phone-section-bg-7"></div>
-        <div className="phone-section-bg phone-section-bg-8"></div>
-      </div>
-      <div className="section s-4">
-        <div className="phone-section-bg phone-section-bg-1"></div>
-        <div className="phone-section-bg phone-section-bg-2"></div>
-        <div className="phone-section-bg phone-section-bg-3"></div>
-        <div className="phone-section-bg phone-section-bg-4"></div>
-        <div className="phone-section-bg phone-section-bg-5"></div>
-        <div className="phone-section-bg phone-section-bg-6"></div>
-        <div className="phone-section-bg phone-section-bg-7"></div>
-        <div className="phone-section-bg phone-section-bg-8"></div>
-      </div>
-      <div className="section s-5">
-        <div className="phone-section-bg phone-section-bg-1"></div>
-        <div className="phone-section-bg phone-section-bg-2"></div>
-        <div className="phone-section-bg phone-section-bg-3"></div>
-        <div className="phone-section-bg phone-section-bg-4"></div>
-        <div className="phone-section-bg phone-section-bg-5"></div>
-        <div className="phone-section-bg phone-section-bg-6"></div>
-        <div className="phone-section-bg phone-section-bg-7"></div>
-        <div className="phone-section-bg phone-section-bg-8"></div>
-      </div>
-      <div className="section s-6">
-        <div className="phone-section-bg phone-section-bg-1"></div>
-        <div className="phone-section-bg phone-section-bg-2"></div>
-        <div className="phone-section-bg phone-section-bg-3"></div>
-        <div className="phone-section-bg phone-section-bg-4"></div>
-        <div className="phone-section-bg phone-section-bg-5"></div>
-        <div className="phone-section-bg phone-section-bg-6"></div>
-        <div className="phone-section-bg phone-section-bg-7"></div>
-        <div className="phone-section-bg phone-section-bg-8"></div>
-      </div>
-    </div>
-  );
+  const displayEntities = useMemo(() => {
+    let entities = [];
+    for (let e = 1; e < 7; e++) {
+      entities.push(<Bubble classNameIndex={e} key={e} />);
+    }
+    return entities;
+  }, []);
+
+  return <div className="display-bg">{displayEntities}</div>;
 };
 
 export default Display;

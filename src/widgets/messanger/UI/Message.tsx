@@ -1,5 +1,5 @@
-import React, { memo, useEffect, useRef, useState } from "react";
-import { Dispatch, SetStateAction } from "react";
+import React, { forwardRef, memo, useEffect, useRef, useState } from "react";
+import { MutableRefObject } from "react";
 
 type className = "right-sms" | "left-sms";
 
@@ -10,60 +10,84 @@ interface MessagePropsI {
   timeout: number;
   isTyping: boolean;
   partIndex: number;
-  typeFn: <S>(
-    i: number,
-    t: number,
-    ie: string,
-    setState: Dispatch<SetStateAction<S>>,
-    className: string,
-    block: HTMLElement | null
-  ) => void;
+  isScrolling: boolean;
 }
 
 const Message = memo(
-  ({
-    className,
-    text,
-    isHidden,
-    partIndex,
-    timeout,
-    typeFn,
-  }: MessagePropsI) => {
-    const messageBlockRef = useRef(null);
+  forwardRef(
+    (
+      {
+        className,
+        text,
+        isHidden,
+        partIndex,
+        timeout,
+        isScrolling,
+      }: MessagePropsI,
+      ref: { current: HTMLElement }
+    ) => {
+      const newRef = useRef(ref.current);
+      const [isDisplayed, setIsDisplayed] = useState(
+        timeout === 0 ? true : false
+      );
+      const [currentText, setCurrentText] = useState("");
+      const [isTyping, setIsTyping] = useState(false);
 
-    const [isDisplayed, setIsDisplayed] = useState(
-      timeout === 0 ? true : false
-    );
+      useEffect(() => {
+        console.log("first eff");
+        if (!isDisplayed) {
+          setTimeout(() => {
+            setIsDisplayed(true);
+          }, timeout);
+        }
+      }, []);
 
-    const [currentText, setCurrentText] = useState("");
+      useEffect(() => {
+        console.log("second eff");
+        const timer = setTimeout(() => {
+          console.log(isDisplayed);
+          if (isDisplayed) {
+            if (text[currentText.length]) {
+              setIsTyping(true);
+              setCurrentText((prevState) => prevState + text[prevState.length]);
+            } else {
+              setIsTyping(false);
+            }
+          }
+        }, 30);
+        return () => {
+          clearTimeout(timer);
+        };
+      }, [currentText, isDisplayed]);
 
-    useEffect(() => {
-      const block = document.querySelector(".dialogue-window") as HTMLElement;
-      if (!isDisplayed) {
-        setTimeout(() => {
-          setIsDisplayed(true);
+      useEffect(() => {
+        const clear = setInterval(() => {
+          if (!isScrolling && isTyping) {
+            newRef.current.scrollTo({
+              top: newRef.current.scrollHeight,
+              behavior: "smooth",
+            });
+          }
+        }, 30);
+        return () => {
+          clearInterval(clear);
+        };
+      }, [isTyping, isScrolling]);
 
-          typeFn(0, 30, text, setCurrentText, className, block);
-        }, timeout);
-      } else {
-        typeFn(0, 30, text, setCurrentText, className, block);
-      }
-    }, []);
-
-    return isDisplayed ? (
-      <div
-        className="sms-wrapper"
-        style={{ display: isHidden ? "none" : "block" }}
-        ref={messageBlockRef}
-      >
-        <p className={`${"sms " + className}`} aria-label="Ваше сообщение">
-          {className === "right-sms" ? text : currentText}
-        </p>
-      </div>
-    ) : (
-      ""
-    );
-  }
+      return isDisplayed ? (
+        <div
+          className="sms-wrapper"
+          style={{ display: isHidden ? "none" : "block" }}
+        >
+          <p className={`${"sms " + className}`} aria-label="Ваше сообщение">
+            {className === "right-sms" ? text : currentText}
+          </p>
+        </div>
+      ) : (
+        ""
+      );
+    }
+  )
 );
 
 export default Message;

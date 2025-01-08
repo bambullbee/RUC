@@ -1,8 +1,8 @@
-import React from "react";
+import React, { memo } from "react";
 import SvgS from "./components/SvgS";
 import BgDisplay from "./components/Display";
 
-const WIdget = () => {
+const WIdget = memo(() => {
   return (
     <section className="app-section container" aria-label="Виджет">
       <div className="right">
@@ -15,6 +15,6 @@ const WIdget = () => {
       </div>
     </section>
   );
-};
+});
 
 export default WIdget;

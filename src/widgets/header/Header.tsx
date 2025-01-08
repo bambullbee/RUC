@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch, memo, SetStateAction } from "react";
 
 import HeaderNavItem from "./UI/HeaderNavItem";
 import NarrowHeaderDecor from "./UI/NarrowHeaderDecor";
@@ -11,7 +11,11 @@ const titles = [
   { title: "Словарик", zone: "side" },
 ];
 
-const Header = () => {
+interface headerPropsI {
+  setIsWidgetMenu: Dispatch<SetStateAction<boolean>>;
+}
+
+const Header = memo(({ setIsWidgetMenu }: headerPropsI) => {
   return (
     <header>
       <nav className="wide-nav">
@@ -27,6 +31,6 @@ const Header = () => {
       </nav>
     </header>
   );
-};
+});
 
 export default Header;
