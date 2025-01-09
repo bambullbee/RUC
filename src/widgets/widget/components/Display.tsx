@@ -1,17 +1,24 @@
-import React, { useMemo } from "react";
+import React, { memo } from "react";
 
 import Bubble from "../UI/Bubble";
+import DisplayMenu from "./DisplayMenu";
 
-const Display = () => {
-  const displayEntities = useMemo(() => {
-    let entities = [];
+interface displayPropsI {
+  isWidgetMenu: boolean;
+}
+
+const Display = memo(({ isWidgetMenu }: displayPropsI) => {
+  let entities;
+  if (!isWidgetMenu) {
+    entities = [];
     for (let e = 1; e < 7; e++) {
       entities.push(<Bubble classNameIndex={e} key={e} />);
     }
-    return entities;
-  }, []);
+  } else {
+    entities = <DisplayMenu />;
+  }
 
-  return <div className="display-bg">{displayEntities}</div>;
-};
+  return <div className="display-bg">{entities}</div>;
+});
 
 export default Display;

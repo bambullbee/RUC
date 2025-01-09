@@ -15,7 +15,7 @@ import data from "@/app/data/data";
 
 import Message from "./UI/Message";
 import Answer from "./UI/Answer";
-import Banner from "./components/Banner";
+import Banner from "../../entities/Banner/components/Banner";
 
 function isEventSupported(eventName: keyof HTMLDivElement) {
   var el = document.createElement("div");

@@ -24,7 +24,12 @@ const Header = memo(({ setIsWidgetMenu }: headerPropsI) => {
         })}
       </nav>
       <nav className="narrow-nav">
-        <button className="header-btn">
+        <button
+          className="header-btn"
+          onClick={() => {
+            setIsWidgetMenu((prevState) => !prevState);
+          }}
+        >
           Главное меню
           <NarrowHeaderDecor />
         </button>

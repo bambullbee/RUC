@@ -4,18 +4,30 @@ import Header from "@/widgets/header/index";
 import Messanger from "@/widgets/messanger/index";
 import Widget from "@/widgets/widget/index";
 import GlobalBg from "./glogalBG/components/GlobalBg";
-import { useState } from "react";
-import Banner from "@/widgets/messanger/components/Banner";
+import { useEffect, useState } from "react";
+import Banner from "@/entities/Banner/components/Banner";
 
 const App = () => {
   const [isScrolling, setIsScrolling] = useState(false);
   const [isWidgetMenu, setIsWidgetMenu] = useState(false);
+  useEffect(() => {
+    function resizeHandler() {
+      if (
+        window.innerWidth > 992 &&
+        window.innerWidth / window.innerHeight < 2
+      ) {
+        setIsWidgetMenu(false);
+      }
+    }
+    window.addEventListener("resize", resizeHandler);
+    return () => window.removeEventListener("resize", resizeHandler);
+  }, []);
   return (
     <>
       <Header setIsWidgetMenu={setIsWidgetMenu} />
       <main>
         <Messanger isScrolling={isScrolling} setIsScrolling={setIsScrolling} />
-        <Widget />
+        <Widget isWidgetMenu={isWidgetMenu} />
         <button
           className="scroll-prevent-btn"
           style={{

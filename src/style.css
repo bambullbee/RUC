@@ -31,6 +31,7 @@
   --header-nav-item-dropshadow-text: rgb(255, 0, 212);
   --fz1: 30px;
   --fz-lh: 2.5vmin;
+  --phone-container-width: 90vw;
 }
 
 body {
@@ -389,8 +390,7 @@ button span {
 
 .app-section {
   position: relative;
-  height: calc(50vh - 15px);
-  margin-bottom: 15px;
+  height: 50vh;
   width: 100%;
   max-width: 1600px;
   display: flex;
@@ -407,7 +407,7 @@ main {
 }
 
 .container {
-  width: 90vw;
+  width: var(--phone-container-width);
   margin: 0 auto;
   max-width: 1600px;
 }
@@ -432,12 +432,14 @@ main {
 .scroll-prevent-btn {
   position: absolute;
   z-index: 4;
-  right: 15px;
-  top: 0;
+  right: 20px;
+  top: 2px;
   width: 8vw;
   max-width: 112px;
+  min-width: 50px;
   height: 8vw;
   max-height: 112px;
+  min-height: 50px;
   margin: 0.5vmin;
   outline: none;
   border: none;
@@ -689,10 +691,59 @@ main {
 }
 
 .display-bg {
-  position: relative;
-  z-index: 1;
   width: 50%;
   height: 100%;
+}
+
+.menu {
+  position: relative;
+  z-index: 3;
+  height: 100%;
+  width: 100%;
+  margin-right: 20px;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-areas:
+    "a a b b c c"
+    "d d d e e e";
+}
+
+.menu-item {
+  display: flex;
+  color: white;
+  text-align: center;
+  width: 90%;
+  height: 90%;
+  padding: 5px;
+  margin: 2.5%;
+  border-radius: 40px;
+  background-color: var(--primary-HO-color);
+  font-size: var(--fz1);
+}
+
+.menu-item__inner {
+  margin: auto;
+}
+
+.menu-item:nth-child(1) {
+  grid-area: a;
+}
+
+.menu-item:nth-child(2) {
+  grid-area: b;
+}
+
+.menu-item:nth-child(3) {
+  grid-area: c;
+}
+
+.menu-item:nth-child(4) {
+  grid-area: d;
+}
+
+.menu-item:nth-child(5) {
+  grid-area: e;
 }
 
 .display-bg-bubble {
@@ -707,42 +758,42 @@ main {
 
 .dbb__1 {
   top: 16%;
-  left: 60%;
+  left: 81%;
   width: 7vmin;
   height: 7vmin;
 }
 
 .dbb__2 {
   top: 79%;
-  left: -80%;
+  left: 10%;
   width: 7vmin;
   height: 7vmin;
 }
 
 .dbb__3 {
   top: -3%;
-  left: -6%;
+  left: 46.5%;
   width: 20vmin;
   height: 20vmin;
 }
 
 .dbb__4 {
   top: 50%;
-  left: -20%;
+  left: 40%;
   width: 12vmin;
   height: 12vmin;
 }
 
 .dbb__5 {
   top: 37%;
-  left: 50%;
+  left: 75%;
   width: 18vmin;
   height: 18vmin;
 }
 
 .dbb__6 {
   top: 73%;
-  left: 15%;
+  left: 57%;
   width: 18vmin;
   height: 18vmin;
 }
@@ -772,12 +823,6 @@ main {
 
 /* MEDIAQUERIES */
 
-@media screen and (min-width: 1600px) {
-  .scroll-prevent-btn {
-    right: calc((100vw - 1575px) / 2);
-  }
-}
-
 @media (min-aspect-ratio: 3/5) {
   .cat {
     height: 100%;
@@ -802,42 +847,11 @@ main {
     height: 50%;
     width: 100%;
   }
-
-  .dbb__1 {
-    top: -72%;
-    left: 81%;
-  }
-
-  .dbb__2 {
-    top: 60%;
-    left: 11.5%;
-  }
-
-  .dbb__3 {
-    top: -103%;
-    left: 45%;
-  }
-
-  .dbb__4 {
-    top: 0%;
-    left: 41%;
-  }
-
-  .dbb__5 {
-    top: -25%;
-    left: 75%;
-  }
-
-  .dbb__6 {
-    top: 46%;
-    left: 58%;
-  }
 }
 
 @media (max-aspect-ratio: 2/3) {
   .messanger {
     padding: 3px 2%;
-    margin: 0 10px;
   }
 
   .answer {
@@ -847,8 +861,8 @@ main {
 }
 
 @media screen and (max-width: 992px), (min-aspect-ratio: 2/1) {
-  .container {
-    width: 97vw;
+  :root {
+    --phone-container-width: 97vw;
   }
 
   nav.narrow-nav {
@@ -905,6 +919,9 @@ main {
     padding: 0px;
     padding-top: 5px;
   }
+  .scroll-prevent-btn {
+    right: 25px;
+  }
 }
 
 @media screen and (max-width: 400px) {
@@ -914,13 +931,8 @@ main {
 }
 
 @media screen and (max-width: 768px) {
-  .container {
-    width: 97vw;
-  }
-
   .app-section {
-    height: calc(50vh - 5px);
-    margin-bottom: 5px;
+    height: 50vh;
   }
 
   .choose-answer {
@@ -932,15 +944,125 @@ main {
   }
 }
 
+@media screen and (max-width: 660px) {
+  .scroll-prevent-btn {
+    right: 13px;
+  }
+}
+
+@media screen and (min-width: 1600px) {
+  :root {
+    --phone-container-width: 1600px;
+  }
+  .scroll-prevent-btn {
+    right: calc((100vw - 1575px) / 2);
+  }
+  .messanger {
+    padding: 10px 20px;
+  }
+}
+
+@media (min-aspect-ratio: 3 / 1.618) {
+  .dbb__1 {
+    top: 10%;
+    left: 90%;
+  }
+
+  .dbb__2 {
+    top: 79%;
+    left: 30%;
+  }
+
+  .dbb__3 {
+    top: -3%;
+    left: 65%;
+  }
+
+  .dbb__4 {
+    top: 43%;
+    left: 45%;
+  }
+
+  .dbb__5 {
+    top: 37%;
+    left: 85%;
+  }
+
+  .dbb__6 {
+    top: 65%;
+    left: 60%;
+  }
+}
+
+@media (max-aspect-ratio: 1.2/1) and (min-aspect-ratio: 3/5.01) {
+  .menu {
+    grid-template-areas: "a" "b" "c" "d" "e";
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(5, 1fr);
+  }
+
+  .menu-item {
+    height: 80%;
+    margin: 2% auto;
+    width: 80%;
+  }
+}
+
+@media (max-aspect-ratio: 1/0.7) {
+  main {
+  }
+  .menu {
+    grid-template-areas: "a" "b" "c" "d" "e";
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(5, 1fr);
+  }
+  .menu-item:nth-child(4) {
+    /* position: absolute;
+    z-index: 3;
+    left: -100%;
+    top: 0; */
+  }
+  .menu-item:nth-child(5) {
+  }
+}
+
+@media (max-aspect-ratio: 3/5) {
+  .menu {
+    grid-template-areas: "a a b b c c" "d d d e e e";
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: 1fr 1fr;
+  }
+}
+
+@media (min-aspect-ratio: 3/5) and (max-aspect-ratio: 4/5) {
+  main {
+    /* background-color: red; */
+  }
+  .menu {
+    display: flex;
+    flex-direction: column;
+    height: calc(97vw * 0.9 / 2);
+  }
+
+  .menu-item:nth-child(4) {
+    height: calc((50vh * 0.9 - (var(--phone-container-width) * 0.9 / 2)));
+    position: absolute;
+    z-index: 1;
+    top: calc(var(--phone-container-width) * 0.9 / 2);
+    left: -90%;
+  }
+  .menu-item:nth-child(5) {
+    position: absolute;
+    z-index: 1;
+    top: calc(var(--phone-container-width) * 0.9 / 2);
+    left: 10%;
+  }
+}
+
 @media screen and (min-width: 480px) {
   :root {
     --fz1: 12px;
   }
-  /* .dialogue-window,
-  .app-section,
-  .answer {
-    font-size: 12px;
-  } */
 }
 
 @media screen and (max-width: 480px) {
@@ -950,34 +1072,18 @@ main {
 }
 
 @media screen and (min-width: 768px) {
-  /* .dialogue-window,
-  .app-section,
-  .answer {
-    font-size: 15px;
-  } */
   :root {
     --fz1: 15px;
   }
 }
 
 @media screen and (min-width: 992px) {
-  /* .dialogue-window,
-  .app-section,
-  .answer {
-    font-size: 20px;
-  } */
-
   :root {
     --fz1: 20px;
   }
 }
 
 @media screen and (min-width: 1280px) {
-  /* .dialogue-window,
-  .app-section,
-  .answer {
-    font-size: 30px;
-  } */
   :root {
     --fz1: 30px;
   }
