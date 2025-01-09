@@ -7,7 +7,9 @@ interface menuItemPropsI {
 const MenuItem = ({ text }: menuItemPropsI) => {
   return (
     <div className="menu-item">
-      <div className="menu-item__inner">{text}</div>
+      <div className="menu-item__inner">
+        <div className="menu-item__inner__text">{text}</div>
+      </div>
     </div>
   );
 };
