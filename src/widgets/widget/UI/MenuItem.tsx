@@ -1,15 +1,32 @@
+import { currentLocation } from "@/shared/types";
 import React from "react";
+import { useDispatch } from "react-redux";
+import { changeCurrentLocation } from "@/app/features/curerntLocationSlice";
+import { RootState } from "@/app/store";
 
-interface menuItemPropsI {
+import { bubblePropsI } from "../types/types";
+
+interface menuItemPropsI extends bubblePropsI {
   text: string;
+  loc: currentLocation;
 }
 
-const MenuItem = ({ text }: menuItemPropsI) => {
+const MenuItem = ({ text, loc, style }: menuItemPropsI) => {
+  if (text == "О сайте") {
+    console.log(style);
+  }
+  const dispatch = useDispatch();
   return (
     <div className="menu-item">
-      <div className="menu-item__inner">
+      <button
+        className="menu-item__inner"
+        style={{ opacity: style }}
+        onClick={() => {
+          dispatch(changeCurrentLocation(loc));
+        }}
+      >
         <div className="menu-item__inner__text">{text}</div>
-      </div>
+      </button>
     </div>
   );
 };

@@ -1,24 +1,11 @@
-export default function applyTheme() {
-  const body = document.querySelector("body");
-  //   const themeTrigger = document.querySelector(".s-1");
-  if (
-    window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches
-  ) {
-    body.classList.add("dark");
-  }
-  //   themeTrigger.addEventListener("click", () => {
-  //     body.classList.toggle("dark");
-  //   });
+import { changeTheme } from "./app/features/mainStateSlice";
+import { store } from "./app/store";
 
+export default function applyTheme() {
   window
     .matchMedia("(prefers-color-scheme: dark)")
     .addEventListener("change", (event) => {
-      const newColorScheme = event.matches ? true : false;
-      if (newColorScheme) {
-        body.classList.add("dark");
-      } else {
-        body.classList.remove("dark");
-      }
+      const newColorScheme = event.matches ? "dark" : "light";
+      store.dispatch(changeTheme(newColorScheme));
     });
 }

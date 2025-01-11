@@ -1,13 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-type currentLocation = "about" | "sett" | "prof" | "quests" | "dict" | "none";
+import { currentLocation } from "@/shared/types";
+
+const initialState: currentLocation = "none";
 
 const currentLocationSlice = createSlice({
   name: "currentLocation",
-  initialState: "none",
+  initialState,
   reducers: {
-    changeCurrentLocation(state, action: PayloadAction<currentLocation>) {
-      state = action.payload;
+    changeCurrentLocation: (state, action: PayloadAction<any>) => {
+      return action.payload;
     },
   },
 });

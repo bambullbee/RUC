@@ -30,8 +30,6 @@ function isEventSupported(eventName: keyof HTMLDivElement) {
 }
 
 function hasTouch() {
-  console.log(navigator.userAgent);
-
   if (
     navigator.userAgent.match(/iPhone/i) ||
     navigator.userAgent.match(/iPad/i) ||

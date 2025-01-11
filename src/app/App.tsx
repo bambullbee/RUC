@@ -7,16 +7,19 @@ import GlobalBg from "./glogalBG/components/GlobalBg";
 import { useEffect, useState } from "react";
 import Banner from "@/entities/Banner/components/Banner";
 
+import { changeCurrentLocation } from "./features/curerntLocationSlice";
+import { useDispatch, UseDispatch } from "react-redux";
+
 const App = () => {
   const [isScrolling, setIsScrolling] = useState(false);
-  const [isWidgetMenu, setIsWidgetMenu] = useState(false);
+  const dispatch = useDispatch();
   useEffect(() => {
     function resizeHandler() {
       if (
         window.innerWidth > 992 &&
         window.innerWidth / window.innerHeight < 2
       ) {
-        setIsWidgetMenu(false);
+        dispatch(changeCurrentLocation("none"));
       }
     }
     window.addEventListener("resize", resizeHandler);
@@ -24,10 +27,10 @@ const App = () => {
   }, []);
   return (
     <>
-      <Header setIsWidgetMenu={setIsWidgetMenu} />
+      <Header />
       <main>
         <Messanger isScrolling={isScrolling} setIsScrolling={setIsScrolling} />
-        <Widget isWidgetMenu={isWidgetMenu} />
+        <Widget />
         <button
           className="scroll-prevent-btn"
           style={{

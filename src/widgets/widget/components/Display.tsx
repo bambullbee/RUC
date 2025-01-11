@@ -1,24 +1,34 @@
-import React, { memo } from "react";
+import { memo, useMemo, useState } from "react";
+import { RootState } from "@/app/store";
+import { useSelector } from "react-redux";
 
-import Bubble from "../UI/Bubble";
 import DisplayMenu from "./DisplayMenu";
+import Settings from "./Settings";
+import Profile from "./Profile";
+import BubbleDisplay from "./BubbleDisplay";
+import { currentLocation } from "@/shared/types";
 
 interface displayPropsI {
-  isWidgetMenu: boolean;
+  currentLocation: currentLocation;
+  applyInvisibilityMLGMode: boolean;
 }
 
-const Display = memo(({ isWidgetMenu }: displayPropsI) => {
-  let entities;
-  if (!isWidgetMenu) {
-    entities = [];
-    for (let e = 1; e < 7; e++) {
-      entities.push(<Bubble classNameIndex={e} key={e} />);
+const Display = memo(
+  ({ currentLocation, applyInvisibilityMLGMode }: displayPropsI) => {
+    let entities;
+    let style = applyInvisibilityMLGMode ? 0 : 1;
+    if (currentLocation === "none") {
+      entities = <BubbleDisplay style={style} />;
+    } else if (currentLocation === "menu") {
+      entities = <DisplayMenu style={style} />;
+    } else if (currentLocation === "sett") {
+      entities = <Settings style={style} />;
+    } else if (currentLocation === "prof") {
+      entities = <Profile style={style} />;
     }
-  } else {
-    entities = <DisplayMenu />;
-  }
 
-  return <div className="display-bg">{entities}</div>;
-});
+    return <div className="display-bg">{entities}</div>;
+  }
+);
 
 export default Display;

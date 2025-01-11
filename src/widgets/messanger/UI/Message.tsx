@@ -34,7 +34,6 @@ const Message = memo(
       const [isTyping, setIsTyping] = useState(false);
 
       useEffect(() => {
-        console.log("first eff");
         if (!isDisplayed) {
           setTimeout(() => {
             setIsDisplayed(true);
@@ -43,9 +42,7 @@ const Message = memo(
       }, []);
 
       useEffect(() => {
-        console.log("second eff");
         const timer = setTimeout(() => {
-          console.log(isDisplayed);
           if (isDisplayed) {
             if (text[currentText.length]) {
               setIsTyping(true);

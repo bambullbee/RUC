@@ -1,12 +1,13 @@
 import React, { useMemo } from "react";
 
 import MicroBubble from "./MicroBubble";
+import { bubblePropsI } from "../types/types";
 
-interface BubblePropsI {
+interface BubblePropsI extends bubblePropsI {
   classNameIndex: number;
 }
 
-const Bubble = ({ classNameIndex }: BubblePropsI) => {
+const Bubble = ({ classNameIndex, style }: BubblePropsI) => {
   const bubbleEntities = useMemo(() => {
     let entities = [];
     for (let e = 1; e < 9; e++) {
@@ -15,7 +16,10 @@ const Bubble = ({ classNameIndex }: BubblePropsI) => {
     return entities;
   }, []);
   return (
-    <div className={`${"display-bg-bubble dbb__" + classNameIndex}`}>
+    <div
+      className={`${"display-bg-bubble dbb__" + classNameIndex}`}
+      style={{ opacity: style }}
+    >
       {bubbleEntities}
     </div>
   );
