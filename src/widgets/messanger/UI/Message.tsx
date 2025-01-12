@@ -1,5 +1,7 @@
+import { RootState } from "@/app/store";
 import React, { forwardRef, memo, useEffect, useRef, useState } from "react";
 import { MutableRefObject } from "react";
+import { useSelector } from "react-redux";
 
 type className = "right-sms" | "left-sms";
 
@@ -26,6 +28,9 @@ const Message = memo(
       }: MessagePropsI,
       ref: { current: HTMLElement }
     ) => {
+      const isType = useSelector((state: RootState) => {
+        return state.mainState.isTyping;
+      });
       const newRef = useRef(ref.current);
       const [isDisplayed, setIsDisplayed] = useState(
         timeout === 0 ? true : false
@@ -42,6 +47,18 @@ const Message = memo(
       }, []);
 
       useEffect(() => {
+        let timer2: ReturnType<typeof setTimeout>;
+        if (className === "right-sms") {
+          setCurrentText(text);
+        }
+        if (!isType) {
+          setCurrentText(text);
+          setIsTyping(true);
+          timer2 = setTimeout(() => {
+            setIsTyping(false);
+          }, 60);
+          return;
+        }
         const timer = setTimeout(() => {
           if (isDisplayed ?? className !== "right-sms") {
             if (text[currentText.length]) {
@@ -54,6 +71,7 @@ const Message = memo(
         }, 30);
         return () => {
           clearTimeout(timer);
+          clearTimeout(timer2);
         };
       }, [currentText, isDisplayed]);
 
@@ -77,7 +95,8 @@ const Message = memo(
           style={{ display: isHidden ? "none" : "block" }}
         >
           <p className={`${"sms " + className}`} aria-label="Ваше сообщение">
-            {className === "right-sms" ? text : currentText}
+            {/* {className === "right-sms" ? text : currentText} */}
+            {currentText}
           </p>
         </div>
       ) : (

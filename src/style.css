@@ -867,7 +867,7 @@ main {
   background-color: rgb(255, 61, 61);
   opacity: 0;
   animation: before-swim 10s cubic-bezier(0.09, 0.23, 0.76, 0.98) infinite;
-  transition: opacity 0.8s;
+  transition: opacity 1.2s;
 }
 
 .sett-btn {

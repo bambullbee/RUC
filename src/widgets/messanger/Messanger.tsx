@@ -56,6 +56,7 @@ interface messangerPropsI {
 
 const Messanger = memo(
   forwardRef(({ isScrolling, setIsScrolling }: messangerPropsI, ref) => {
+    // !!!
     const isTyping = useSelector((state: RootState) => {
       return state.mainState.isTyping;
     });
