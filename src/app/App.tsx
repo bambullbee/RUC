@@ -8,18 +8,31 @@ import { useEffect, useState } from "react";
 import Banner from "@/entities/Banner/components/Banner";
 
 import { changeCurrentLocation } from "./features/curerntLocationSlice";
-import { useDispatch, UseDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "./store";
+import { currentLocation } from "@/shared/types";
 
 const App = () => {
   const [isScrolling, setIsScrolling] = useState(false);
+  const currentLocation = useSelector(
+    (state: RootState): currentLocation => state.currentLocation
+  );
   const dispatch = useDispatch();
   useEffect(() => {
     function resizeHandler() {
+      // why resizer works only with this console.log
+      console.log(
+        window.innerWidth > 992,
+        window.innerWidth / window.innerHeight < 2,
+        currentLocation
+      );
       if (
         window.innerWidth > 992 &&
         window.innerWidth / window.innerHeight < 2
       ) {
-        dispatch(changeCurrentLocation("none"));
+        if (currentLocation === "menu") {
+          dispatch(changeCurrentLocation("none"));
+        }
       }
     }
     window.addEventListener("resize", resizeHandler);

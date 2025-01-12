@@ -8,7 +8,7 @@ const LanguageButton = () => {
   const dispatch = useDispatch();
   return (
     <button
-      className="sett-btn"
+      className="sett-btn btn-display"
       onClick={() => {
         if (language === "russian") {
           dispatch(changeLanguage("kitties"));
@@ -17,7 +17,7 @@ const LanguageButton = () => {
         }
       }}
     >
-      {language}
+      Язык {language === "russian" ? "РУССКИЙ" : "КОТЯЧИЙ"}
     </button>
   );
 };

@@ -722,20 +722,11 @@ main {
 }
 
 .menu-item__inner {
-  color: var(--third-color);
-  font-family: "Jost", sans-serif;
-  font-size: var(--fz1);
-  font-weight: 500;
-  padding: 5px;
-  border: 2px solid var(--secondary-color);
-  border-radius: 40px;
-  background-color: var(--primary-HO-color);
   width: 90%;
   height: 85%;
   margin: 2.5%;
   display: flex;
   margin: auto;
-  transition: background-color 0.2s, border-color 0.2s, opacity 0.3s;
 }
 
 .menu-item__inner__text {
@@ -843,9 +834,50 @@ main {
 }
 
 .sett {
+  display: flex;
+  flex-wrap: wrap;
   transition: opacity 0.3s;
 }
+
+.btn-display {
+  position: relative;
+  z-index: 5;
+  color: var(--third-color);
+  font-family: "Jost", sans-serif;
+  font-size: var(--fz1);
+  font-weight: 500;
+  padding: 5px;
+  border: 2px solid var(--secondary-color);
+  border-radius: 40px;
+  background-color: var(--primary-HO-color);
+  transition: background-color 0.2s, border-color 0.2s, opacity 0.3s;
+  overflow: hidden;
+}
+
+.btn-display:before {
+  content: "";
+  position: absolute;
+  z-index: -5;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: url("./widgets/widget/assets/Paw.png");
+  background-size: 50px 50px;
+  background-color: rgb(255, 61, 61);
+  opacity: 0;
+  animation: before-swim 10s cubic-bezier(0.09, 0.23, 0.76, 0.98) infinite;
+  transition: opacity 0.8s;
+}
+
 .sett-btn {
+  position: relative;
+  z-index: 3;
+  display: block;
+  width: 45%;
+  height: calc(50vh * 0.9 / 2 * 0.8);
+
+  margin: 1.25%;
   animation: pop-up-one-appear 0.3s ease-in forwards;
 }
 
@@ -1033,6 +1065,15 @@ main {
     margin: 2% auto;
     width: 80%;
   }
+  .sett {
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
+  .sett-btn {
+    height: calc(50vh * 0.9 * 0.25 * 0.9);
+    width: 90%;
+    margin: 1% auto;
+  }
 }
 
 @media (max-aspect-ratio: 3/5) {
@@ -1074,9 +1115,39 @@ main {
     width: 200%;
     left: -100%;
   }
-}
 
-/* RULES UNDER REPLACE THIS */
+  .sett {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: calc(var(--phone-container-width) * 0.9 / 2);
+    margin: 0 auto;
+  }
+  .sett-btn {
+    width: 90%;
+    height: 45%;
+    margin: 2.5% auto;
+  }
+
+  .sett-btn:nth-child(3) {
+    position: absolute;
+    top: 102%;
+    left: -100%;
+    height: calc((50vh * 0.9 - (var(--phone-container-width) * 0.9 / 2)) * 0.9);
+    margin: 0 5%;
+  }
+  .sett-btn:nth-child(4) {
+    position: absolute;
+    top: 102%;
+    left: 0;
+    height: calc((50vh * 0.9 - (var(--phone-container-width) * 0.9 / 2)) * 0.9);
+    margin: 0 5%;
+  }
+}
 
 @media (min-aspect-ratio: 3/5) and (max-aspect-ratio: 4/5) {
   .menu {
@@ -1099,29 +1170,48 @@ main {
     top: calc(var(--phone-container-width) * 0.9 / 2);
     left: 10%;
   }
+  .sett-btn {
+    height: calc(var(--phone-container-width) * 0.9 / 4 * 0.95);
+  }
+  .sett-btn:nth-child(3) {
+    height: calc(0.9 * (50vh * 0.9 - (var(--phone-container-width) * 0.9 / 2)));
+    position: absolute;
+    z-index: 1;
+    top: calc(var(--phone-container-width) * 0.9 / 2);
+    left: 52.5%;
+    width: 45%;
+  }
+  .sett-btn:nth-child(4) {
+    width: 45%;
+    position: absolute;
+    z-index: 1;
+    height: calc(0.9 * (50vh * 0.9 - (var(--phone-container-width) * 0.9 / 2)));
+    top: calc(var(--phone-container-width) * 0.9 / 2);
+    left: 2.5%;
+  }
 }
 
 @media screen and (min-width: 480px) {
   :root {
-    --fz1: 12px;
+    --fz1: 18px;
   }
 }
 
 @media screen and (max-width: 480px) {
   :root {
-    --fz1: 12px;
+    --fz1: 18px;
   }
 }
 
 @media screen and (min-width: 768px) {
   :root {
-    --fz1: 15px;
+    --fz1: 20px;
   }
 }
 
 @media screen and (min-width: 992px) {
   :root {
-    --fz1: 20px;
+    --fz1: 25px;
   }
 }
 
@@ -1243,9 +1333,35 @@ main {
     transform: translate(0vmin, -12vmin);
   }
 
-  .menu-item__inner:hover {
+  .btn-display:hover {
     background: var(--secondary-HO-color);
     border-color: var(--primary-color);
+  }
+
+  .btn-display:hover::before {
+    position: absolute;
+    z-index: -5;
+    opacity: 1;
+
+    filter: brightness(1);
+  }
+}
+
+@keyframes before-swim {
+  0% {
+    transform: translate(0);
+  }
+  25% {
+    transform: translate(12.5%, 12.5%);
+  }
+  50% {
+    transform: translate(25%, 0%);
+  }
+  75% {
+    transform: translate(12.5%, -12.5%);
+  }
+  100% {
+    transform: translate(0);
   }
 }
 

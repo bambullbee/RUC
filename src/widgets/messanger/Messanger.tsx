@@ -56,6 +56,9 @@ interface messangerPropsI {
 
 const Messanger = memo(
   forwardRef(({ isScrolling, setIsScrolling }: messangerPropsI, ref) => {
+    const isTyping = useSelector((state: RootState) => {
+      return state.mainState.isTyping;
+    });
     const messangerBlock = useRef(null);
     const currentLocation: keyof RootState["navigation"]["routes"] =
       useSelector((state: RootState) => state.navigation.currentLocation);

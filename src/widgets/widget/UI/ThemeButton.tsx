@@ -12,7 +12,7 @@ const ThemeButton = () => {
   const dispatch = useDispatch();
   return (
     <button
-      className="sett-btn"
+      className="sett-btn btn-display"
       onClick={() => {
         if (theme === "dark") {
           dispatch(changeTheme("light"));
@@ -21,7 +21,7 @@ const ThemeButton = () => {
         }
       }}
     >
-      {theme}
+      Тема {theme === "dark" ? "ТЕМНАЯ" : "СВЕТЛАЯ"}
     </button>
   );
 };

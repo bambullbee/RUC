@@ -43,7 +43,7 @@ const Message = memo(
 
       useEffect(() => {
         const timer = setTimeout(() => {
-          if (isDisplayed) {
+          if (isDisplayed ?? className !== "right-sms") {
             if (text[currentText.length]) {
               setIsTyping(true);
               setCurrentText((prevState) => prevState + text[prevState.length]);

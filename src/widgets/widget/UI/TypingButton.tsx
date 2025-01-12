@@ -9,7 +9,7 @@ const TypingButton = () => {
   const dispatch = useDispatch();
   return (
     <button
-      className="sett-btn"
+      className="sett-btn btn-display"
       onClick={() => {
         if (isTyping === true) {
           dispatch(changeIsTyping(false));

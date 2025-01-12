@@ -19,7 +19,7 @@ const MenuItem = ({ text, loc, style }: menuItemPropsI) => {
   return (
     <div className="menu-item">
       <button
-        className="menu-item__inner"
+        className="menu-item__inner btn-display"
         style={{ opacity: style }}
         onClick={() => {
           dispatch(changeCurrentLocation(loc));
