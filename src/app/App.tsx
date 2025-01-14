@@ -11,6 +11,7 @@ import { changeCurrentLocation } from "./features/curerntLocationSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./store";
 import { currentLocation } from "@/shared/types";
+import Profile from "@/widgets/profile/Profile";
 
 const App = () => {
   const [isScrolling, setIsScrolling] = useState(false);
@@ -64,6 +65,7 @@ const App = () => {
         ></button>
         <Banner isScrolling={isScrolling} />
       </main>
+      <Profile />
       <GlobalBg />
     </>
   );

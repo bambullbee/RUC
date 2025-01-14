@@ -1,8 +1,8 @@
 import { currentLocation } from "@/shared/types";
-import React from "react";
+
 import { useDispatch } from "react-redux";
 import { changeCurrentLocation } from "@/app/features/curerntLocationSlice";
-import { RootState } from "@/app/store";
+import { changeVisibility } from "@/app/features/profileSlice";
 
 import { bubblePropsI } from "../types/types";
 
@@ -22,7 +22,11 @@ const MenuItem = ({ text, loc, style }: menuItemPropsI) => {
         className="menu-item__inner btn-display"
         style={{ opacity: style }}
         onClick={() => {
-          dispatch(changeCurrentLocation(loc));
+          if (loc !== "prof") {
+            dispatch(changeCurrentLocation(loc));
+          } else {
+            dispatch(changeVisibility());
+          }
         }}
       >
         <div className="menu-item__inner__text">{text}</div>

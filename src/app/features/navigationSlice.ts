@@ -24,18 +24,19 @@ interface routesI {
 interface initialStateI {
   routes: routesI;
   currentLocation: keyof routesI;
+  isRestarted: number;
 }
 
 const initialState: initialStateI = {
   routes: { test, help },
   currentLocation,
+  isRestarted: 0,
 };
 
 const navigationSlice = createSlice({
   name: "navigation",
   initialState,
   reducers: {
-    answerQuestion(state) {},
     inPartMove(state) {
       state.routes[currentLocation] += 0.01;
       localStorage.setItem(
@@ -47,9 +48,14 @@ const navigationSlice = createSlice({
       state.currentLocation = action.payload;
       localStorage.setItem("currentLocation", action.payload);
     },
+    restart(state) {
+      state.routes = { test: 100, help: 200 };
+      state.currentLocation = "test";
+      state.isRestarted += 1;
+    },
   },
 });
 
-export const { inPartMove, interPartMove } = navigationSlice.actions;
+export const { inPartMove, interPartMove, restart } = navigationSlice.actions;
 
 export default navigationSlice.reducer;

@@ -2,4 +2,8 @@ interface bubblePropsI {
   style: number;
 }
 
-export { bubblePropsI };
+interface profItemI {
+  prop: string | number | string[];
+}
+
+export { bubblePropsI, profItemI };

@@ -1,10 +1,7 @@
-import { memo, useMemo, useState } from "react";
-import { RootState } from "@/app/store";
-import { useSelector } from "react-redux";
+import { memo } from "react";
 
 import DisplayMenu from "./DisplayMenu";
 import Settings from "./Settings";
-import Profile from "./Profile";
 import BubbleDisplay from "./BubbleDisplay";
 import { currentLocation } from "@/shared/types";
 
@@ -23,8 +20,6 @@ const Display = memo(
       entities = <DisplayMenu style={style} />;
     } else if (currentLocation === "sett") {
       entities = <Settings style={style} />;
-    } else if (currentLocation === "prof") {
-      entities = <Profile style={style} />;
     }
 
     return <div className="display-bg">{entities}</div>;

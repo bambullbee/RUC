@@ -4,12 +4,14 @@ import type { Action, ThunkAction } from "@reduxjs/toolkit";
 import navigationReducer from "./features/navigationSlice";
 import currentLocationReducer from "./features/curerntLocationSlice";
 import mainStateReducer from "./features/mainStateSlice";
+import profileReducer from "./features/profileSlice";
 
 export const store = configureStore({
   reducer: {
     navigation: navigationReducer,
     currentLocation: currentLocationReducer,
     mainState: mainStateReducer,
+    profile: profileReducer,
   },
 });
 

@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 
 import MicroBubble from "./MicroBubble";
-import { bubblePropsI } from "../types/types";
+import { bubblePropsI } from "@/widgets/widget/types/types";
 
 interface BubblePropsI extends bubblePropsI {
   classNameIndex: number;

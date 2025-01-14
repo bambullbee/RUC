@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { RootState } from "@/app/store";
 import type { currentLocation } from "@/shared/types";
 import { changeCurrentLocation } from "@/app/features/curerntLocationSlice";
+import { changeVisibility } from "@/app/features/profileSlice";
 
 interface headerNavItemPropsI {
   title: string;
@@ -24,6 +25,8 @@ const HeaderNavItem = ({ title, zone, loc }: headerNavItemPropsI) => {
           onClick={() => {
             if (currentLocation === loc) {
               dispatch(changeCurrentLocation("none"));
+            } else if (loc === "prof") {
+              dispatch(changeVisibility());
             } else {
               dispatch(changeCurrentLocation(loc));
             }

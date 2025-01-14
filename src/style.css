@@ -26,12 +26,15 @@
   --header-link-drop-shadow-color: rgb(208, 164, 231);
   --main-bg-1: rgb(255, 222, 240);
   --main-bg-2: rgb(255, 160, 233);
+  --main-bg-2-0: rgba(255, 160, 233, 0);
   --new-answer-bg: rgb(189, 148, 200);
   --new-answer-HO-bg: rgba(189, 148, 200, 0.8);
   --header-nav-item-dropshadow-text: rgb(255, 0, 212);
   --fz1: 30px;
   --fz-lh: 2.5vmin;
   --phone-container-width: 90vw;
+  --display-bg-width: calc((var(--phone-container-width) * 0.9) - 50vh * 0.9);
+  --profile-item-margin: 20px;
 }
 
 body {
@@ -566,7 +569,7 @@ main {
 
 .cat-circle {
   width: 100%;
-  max-width: calc((50vh - 15px) * 0.9 * 0.5);
+  max-width: calc((50vh) * 0.9 * 0.5);
 }
 
 .cat-circle.dark {
@@ -692,7 +695,7 @@ main {
 }
 
 .display-bg {
-  width: calc((var(--phone-container-width) * 0.9) - 50vh * 0.9);
+  width: var(--display-bg-width);
   min-width: 50%;
   height: 100%;
 }
@@ -829,10 +832,6 @@ main {
   border-bottom-left-radius: 10px;
 }
 
-.prof {
-  transition: opacity 0.3s;
-}
-
 .sett {
   display: flex;
   flex-wrap: wrap;
@@ -881,6 +880,120 @@ main {
   animation: pop-up-one-appear 0.3s ease-in forwards;
 }
 
+/* PROFILE */
+
+.profile {
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  width: 200vw;
+  height: 100vh;
+  background: linear-gradient(
+    90deg,
+    var(--main-bg-1) 0%,
+    var(--main-bg-2-0) 100%
+  );
+  transform-origin: top left;
+  transform: translate(-200%, 0);
+  transition: transform 1s cubic-bezier(0, 0.35, 0.73, 1.04);
+}
+.profile__container {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-template-areas:
+    "a b" "a b"
+    "d c"
+    "e e" "f f";
+}
+.profile__img:nth-child(1) {
+  grid-area: a;
+}
+.profile__img:nth-child(2) {
+  grid-area: b;
+}
+.profile__info-item:nth-child(1) {
+  grid-area: c;
+}
+.profile__info-item:nth-child(2) {
+  grid-area: d;
+}
+.profile__loyalty {
+  grid-area: e;
+}
+.profile__back-btn {
+  grid-area: f;
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.profile__item {
+  display: flex;
+  background-color: var(--secondary-color);
+  border: 5px solid var(--primary-color);
+  border-radius: 30px;
+  outline: none;
+  margin: var(--profile-item-margin);
+  color: var(--primary-color);
+  font-size: calc(var(--fz1) * 1.5);
+  font-size: 500;
+  font-family: "Jost", sans-serif;
+}
+
+.profile__item__inner {
+  margin: auto;
+}
+
+.profile-avatar__1 {
+  fill: var(--primary-color);
+}
+.profile__img {
+  position: relative;
+  z-index: 10;
+  overflow: hidden;
+  display: flex;
+}
+.profile-img__text {
+  font-size: var(--fz1);
+  position: absolute;
+  z-index: 11;
+  top: calc(100% - (var(--fz1) * 1.4));
+  left: 10%;
+  width: 80%;
+  height: var(--fz1) * 2;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  text-align: center;
+  color: var(--third-color);
+  background-color: var(--primary-HO-color);
+}
+.profile__img__pic {
+  border-radius: 20px;
+  margin: auto;
+  height: 100%;
+  max-height: calc(100vw / 2 - var(--profile-item-margin) * 2);
+  width: calc(100vh / 5 * 2 - var(--profile-item-margin) * 2);
+  max-width: calc();
+}
+
+.profile-tip {
+  position: absolute;
+  z-index: 12;
+  top: 5%;
+  left: 5%;
+  width: 40%;
+  padding: 5px;
+  height: auto;
+  text-align: center;
+  border: 3px solid var(--primary-color);
+  border-radius: 10px;
+  background-color: var(--third-color);
+  animation: pop-banner 6s linear infinite;
+}
+
 /* MEDIAQUERIES */
 
 @media (min-aspect-ratio: 3/5) {
@@ -889,7 +1002,7 @@ main {
   }
   .cat-circle {
     width: 100%;
-    max-width: calc((50vh - 15px) * 0.9);
+    max-width: calc((50vh) * 0.9);
   }
 }
 
@@ -1074,6 +1187,9 @@ main {
     width: 90%;
     margin: 1% auto;
   }
+  :root {
+    --profile-item-margin: 15px;
+  }
 }
 
 @media (max-aspect-ratio: 3/5) {
@@ -1147,6 +1263,9 @@ main {
     height: calc((50vh * 0.9 - (var(--phone-container-width) * 0.9 / 2)) * 0.9);
     margin: 0 5%;
   }
+  :root {
+    --profile-item-margin: 5px;
+  }
 }
 
 @media (min-aspect-ratio: 3/5) and (max-aspect-ratio: 4/5) {
@@ -1188,6 +1307,9 @@ main {
     height: calc(0.9 * (50vh * 0.9 - (var(--phone-container-width) * 0.9 / 2)));
     top: calc(var(--phone-container-width) * 0.9 / 2);
     left: 2.5%;
+  }
+  :root {
+    --profile-item-margin: 10px;
   }
 }
 
@@ -1383,6 +1505,7 @@ body.dark {
   --header-link-drop-shadow-color: rgb(208, 164, 231);
   --main-bg-1: #9b6194;
   --main-bg-2: #1b1d97;
+  --main-bg-2-0: #1b1d9700;
 
   --header-nav-item-dropshadow-text: rgb(255, 0, 212);
 }

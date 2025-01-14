@@ -1,5 +1,5 @@
 import React from "react";
-import Bubble from "../UI/Bubble";
+import Bubble from "../UI/BubblesUI/Bubble";
 
 import { bubblePropsI } from "../types/types";
 

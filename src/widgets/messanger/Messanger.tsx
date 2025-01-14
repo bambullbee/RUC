@@ -60,6 +60,9 @@ const Messanger = memo(
     const isTyping = useSelector((state: RootState) => {
       return state.mainState.isTyping;
     });
+    const restart = useSelector(
+      (state: RootState) => state.navigation.isRestarted
+    );
     const messangerBlock = useRef(null);
     const currentLocation: keyof RootState["navigation"]["routes"] =
       useSelector((state: RootState) => state.navigation.currentLocation);
@@ -86,7 +89,7 @@ const Messanger = memo(
         (i as number) += 1;
       }
       setMessageHistory(mHistory);
-    }, []);
+    }, [currentLocation, restart]);
 
     useEffect(() => {
       const el = messangerBlock.current;
