@@ -2,6 +2,7 @@ import { RootState } from "@/app/store";
 import React, { forwardRef, memo, useEffect, useRef, useState } from "react";
 import { MutableRefObject } from "react";
 import { useSelector } from "react-redux";
+import { processStringBySex } from "../features/processStringBySex";
 
 type className = "right-sms" | "left-sms";
 
@@ -31,6 +32,7 @@ const Message = memo(
       const isType = useSelector((state: RootState) => {
         return state.mainState.isTyping;
       });
+      const sex = useSelector((state: RootState) => state.profile.sex);
       const newRef = useRef(ref.current);
       const [isDisplayed, setIsDisplayed] = useState(
         timeout === 0 ? true : false
@@ -49,7 +51,7 @@ const Message = memo(
       useEffect(() => {
         let timer2: ReturnType<typeof setTimeout>;
         if (className === "right-sms") {
-          setCurrentText(text);
+          setCurrentText(processStringBySex(text));
         }
         if (!isType) {
           setCurrentText(text);
@@ -63,7 +65,26 @@ const Message = memo(
           if (isDisplayed ?? className !== "right-sms") {
             if (text[currentText.length]) {
               setIsTyping(true);
-              setCurrentText((prevState) => prevState + text[prevState.length]);
+              setCurrentText((prevState) => {
+                if (text[prevState.length] === "s") {
+                  if (sex === "female") {
+                    return prevState + "a";
+                  } else {
+                    return " " + prevState;
+                  }
+                }
+                if (text[prevState.length] === "b") {
+                  if (sex === "female") {
+                    const copy = prevState;
+                    const arrayCopy = copy.split("");
+                    arrayCopy[copy.length - 1] = "ь";
+                    return " " + arrayCopy.join("");
+                  } else {
+                    return " " + prevState;
+                  }
+                }
+                return prevState + text[prevState.length];
+              });
             } else {
               setIsTyping(false);
             }

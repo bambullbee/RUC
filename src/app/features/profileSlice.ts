@@ -6,7 +6,11 @@ import { createAppAsyncThunk } from "@/shared/withTypes/createAsyncThunk";
 
 export const fetchCatPhoto = createAppAsyncThunk(
   "profile/fetchCatPhoto",
-  () => {}
+  async () => {
+    const response = await fetch("https://api.thecatapi.com/v1/images/search");
+    const data = await response.json();
+    return data[0].url;
+  }
 );
 
 interface photoI {
@@ -24,6 +28,7 @@ interface initialStateI {
   loyalty: number;
   isVisible: boolean;
   bannerUsed: boolean;
+  sex: "male" | "female";
 }
 
 const initialState: initialStateI = {
@@ -34,6 +39,7 @@ const initialState: initialStateI = {
   loyalty: null,
   isVisible: false,
   bannerUsed: false,
+  sex: "male",
 };
 
 const profileSlice = createSlice({
@@ -67,9 +73,18 @@ const profileSlice = createSlice({
     changeBanner(state) {
       state.bannerUsed = !state.bannerUsed;
     },
+    changeSex(state, action) {
+      console.log("sex changer fired", action.payload);
+      state.sex = action.payload;
+    },
     reset() {
       return initialState;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchCatPhoto.fulfilled, (state, action) => {
+      state.photo.url = action.payload;
+    });
   },
 });
 
@@ -82,6 +97,7 @@ export const {
   reset,
   changeVisibility,
   changeBanner,
+  changeSex,
 } = profileSlice.actions;
 
 export default profileSlice.reducer;

@@ -945,6 +945,7 @@ main {
 
 .profile__item__inner {
   margin: auto;
+  text-align: center;
 }
 
 .profile-avatar__1 {

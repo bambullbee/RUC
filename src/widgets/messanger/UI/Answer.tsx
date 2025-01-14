@@ -5,6 +5,10 @@ import React, {
   useLayoutEffect,
   forwardRef,
 } from "react";
+import { processStringBySex } from "../features/processStringBySex";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/app/store";
+import { changeSex } from "@/app/features/profileSlice";
 
 interface answerI {
   text: string;
@@ -14,6 +18,7 @@ interface answerI {
   isHidden: boolean;
   timeout: number;
   isScrolling: boolean;
+  extra?: any;
 }
 
 const Answer = memo(
@@ -27,9 +32,11 @@ const Answer = memo(
         isHidden,
         timeout,
         isScrolling,
+        extra,
       }: answerI,
       ref: { current: HTMLElement }
     ) => {
+      const dispatch = useDispatch();
       const [isDisplayed, setIsDisplayed] = useState(
         timeout === 0 ? true : false
       );
@@ -62,13 +69,21 @@ const Answer = memo(
       return isDisplayed ? (
         <button
           onClick={() => {
+            if (extra) {
+              if (extra.t === "state") {
+                dispatch(extra.fn(extra.arg));
+              }
+              if (extra.t === "input") {
+                // !!!
+              }
+            }
             onClick(partIndex, answerIndex);
           }}
           className="answer"
           aria-label="Вариант ответа"
           style={{ display: isHidden ? "none" : "block" }}
         >
-          {text}
+          {processStringBySex(text)}
         </button>
       ) : (
         ""

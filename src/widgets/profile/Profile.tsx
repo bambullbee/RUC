@@ -6,10 +6,12 @@ import {
   changeVisibility,
   changeBanner,
   changePaw,
+  fetchCatPhoto,
 } from "@/app/features/profileSlice";
 import QuestionMarkSVG from "./UI/QuestionMarkSVG";
 import PawSVG from "./UI/PawSVG";
 import ProfilePhoto from "./UI/ProfilePhoto";
+import { useAppDispatch } from "@/shared/withTypes/useDispatch";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -21,20 +23,20 @@ const Profile = () => {
   return (
     <div className="profile" style={style}>
       <div className="profile__container ">
-        <div
+        <button
           className="profile__img profile__item"
           onClick={() => {
-            let controller = new AbortController();
+            dispatch(fetchCatPhoto() as any);
           }}
         >
-          {profile.photo.isPhoto && !profile.photo.error ? (
+          {profile.photo.url && !profile.photo.error ? (
             <ProfilePhoto src={profile.photo.url} />
           ) : (
             <QuestionMarkSVG />
           )}
           <div className="profile-img__text">Ваше фото</div>
-        </div>
-        <div
+        </button>
+        <button
           className="profile__img profile__item"
           onClick={() => {
             dispatch(changePaw());
@@ -43,15 +45,24 @@ const Profile = () => {
           {profile.paw ? <PawSVG colors={profile.paw} /> : <QuestionMarkSVG />}
 
           <div className="profile-img__text">Ваша лапка</div>
+        </button>
+        <div className="profile__info-item profile__item">
+          <div className="profile__item__inner">
+            Настроение
+            <br />
+            {profile.mood ? `${profile.mood}` : "???"}
+          </div>
         </div>
         <div className="profile__info-item profile__item">
-          <div className="profile__item__inner">Mood</div>
-        </div>
-        <div className="profile__info-item profile__item">
-          <div className="profile__item__inner">Identity</div>
+          <div className="profile__item__inner">
+            Личность
+            <br /> {profile.species ? profile.species : "???"}
+          </div>
         </div>
         <div className="profile__loyalty profile__item">
-          <div className="profile__item__inner">Loyalty</div>
+          <div className="profile__item__inner">
+            Котячье признание: {profile.loyalty ? profile.loyalty : "???"}
+          </div>
         </div>
         <button
           className="profile__back-btn profile__item "
@@ -59,7 +70,7 @@ const Profile = () => {
             dispatch(changeVisibility());
           }}
         >
-          <div className="profile__item__inner"> Back</div>
+          <div className="profile__item__inner"> Назад</div>
         </button>
         {profile.bannerUsed ? (
           ""

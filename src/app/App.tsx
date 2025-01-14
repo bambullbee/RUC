@@ -39,6 +39,7 @@ const App = () => {
     window.addEventListener("resize", resizeHandler);
     return () => window.removeEventListener("resize", resizeHandler);
   }, []);
+  const sex = useSelector((state: RootState) => state.profile.sex);
   return (
     <>
       <Header />

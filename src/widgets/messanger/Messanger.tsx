@@ -168,6 +168,7 @@ const Messanger = memo(
                             timeout={el.part.q.length * 30 + timeout.t + 1000}
                             ref={messangerBlock}
                             isScrolling={isScrolling}
+                            extra={l.extra ? l.extra : null}
                           />
                         );
                       })}
