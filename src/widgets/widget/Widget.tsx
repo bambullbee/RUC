@@ -27,10 +27,7 @@ const Widget = memo(() => {
         <div className="phone-container">
           <div className="phone">
             <SvgS />
-            <Display
-              currentLocation={currentLocation}
-              applyInvisibilityMLGMode={applyInvisibilityMLGMode}
-            />
+            <Display applyInvisibilityMLGMode={applyInvisibilityMLGMode} />
           </div>
         </div>
       </div>

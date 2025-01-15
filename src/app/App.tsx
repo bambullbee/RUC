@@ -24,12 +24,6 @@ const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     function resizeHandler() {
-      //resizer works only with this console.log...
-      console.log(
-        window.innerWidth > 992,
-        window.innerWidth / window.innerHeight < 2,
-        currentLocation
-      );
       if (
         window.innerWidth > 992 &&
         window.innerWidth / window.innerHeight < 2

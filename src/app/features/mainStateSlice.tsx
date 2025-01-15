@@ -1,7 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { initialMainState } from "@/shared/types";
-
 const body = document.querySelector("body");
 
 const theme =
@@ -12,10 +10,17 @@ if (theme === "dark") {
   body.classList.add("dark");
 }
 
+type initialMainState = {
+  theme: "dark" | "light";
+  personality: string;
+  typingSpeed: 0.5 | 1 | 1.5;
+  isTyping: boolean;
+};
+
 const initialState: initialMainState = {
   theme,
   personality: "human",
-  language: "russian",
+  typingSpeed: 1,
   isTyping: true,
 };
 
@@ -34,8 +39,12 @@ const mainStateSlice = createSlice({
     changePersonality(state, action: PayloadAction<string>) {
       state.personality = action.payload;
     },
-    changeLanguage(state, action: PayloadAction<"russian" | "kitties">) {
-      state.language = action.payload;
+    changeTypingSpeed(state) {
+      if (state.typingSpeed === 1.5) {
+        state.typingSpeed = 0.5;
+      } else {
+        state.typingSpeed += 0.5;
+      }
     },
     changeIsTyping(state, action: PayloadAction<boolean>) {
       state.isTyping = action.payload;
@@ -46,8 +55,8 @@ const mainStateSlice = createSlice({
 export const {
   changeTheme,
   changeIsTyping,
-  changeLanguage,
   changePersonality,
+  changeTypingSpeed,
 } = mainStateSlice.actions;
 
 export default mainStateSlice.reducer;

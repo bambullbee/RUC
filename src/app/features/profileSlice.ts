@@ -65,7 +65,7 @@ const profileSlice = createSlice({
       ];
     },
     changeLoyalty(state, action: PayloadAction<number>) {
-      state.loyalty = action.payload;
+      state.loyalty += action.payload;
     },
     changeVisibility(state) {
       state.isVisible = !state.isVisible;

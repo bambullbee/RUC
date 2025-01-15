@@ -8,7 +8,11 @@ import React, {
 import { processStringBySex } from "../features/processStringBySex";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
-import { changeSex, changeSpecies } from "@/app/features/profileSlice";
+import {
+  changeLoyalty,
+  changeSex,
+  changeSpecies,
+} from "@/app/features/profileSlice";
 
 interface answerI {
   text: string;
@@ -74,6 +78,8 @@ const Answer = memo(
               if (extra) {
                 if (extra.t === "state") {
                   dispatch(extra.fn(extra.arg));
+                } else if (extra.t === "rate") {
+                  dispatch(changeLoyalty(extra.v));
                 }
               }
               if (extra?.t === "input" && species.length === 0) {

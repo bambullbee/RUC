@@ -1,23 +1,26 @@
 import { useDispatch, useSelector } from "react-redux";
 
-import { changeLanguage } from "@/app/features/mainStateSlice";
+import { changeTypingSpeed } from "@/app/features/mainStateSlice";
 import { RootState } from "@/app/store";
 
 const LanguageButton = () => {
-  const language = useSelector((state: RootState) => state.mainState.language);
+  const typingSpeed = useSelector(
+    (state: RootState) => state.mainState.typingSpeed
+  );
   const dispatch = useDispatch();
   return (
     <button
       className="sett-btn btn-display"
       onClick={() => {
-        if (language === "russian") {
-          dispatch(changeLanguage("kitties"));
-        } else {
-          dispatch(changeLanguage("russian"));
-        }
+        dispatch(changeTypingSpeed());
       }}
     >
-      Язык {language === "russian" ? "РУССКИЙ" : "КОТЯЧИЙ"}
+      Скорость печатанья{" "}
+      {typingSpeed === 1
+        ? "СРЕДНЯЯ"
+        : typingSpeed === 0.5
+        ? "НИЗКАЯ"
+        : "ВЫСОКАЯ"}
     </button>
   );
 };
