@@ -12,16 +12,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./store";
 import { currentLocation } from "@/shared/types";
 import Profile from "@/widgets/profile/Profile";
+import touchOrMouse from "@/shared/features/touchOrMouseOrIphone";
 
 const App = () => {
-  const [isScrolling, setIsScrolling] = useState(false);
+  const [isScrolling, setIsScrolling] = useState(
+    touchOrMouse === "iPhone" ? true : false
+  );
   const currentLocation = useSelector(
     (state: RootState): currentLocation => state.currentLocation
   );
   const dispatch = useDispatch();
   useEffect(() => {
     function resizeHandler() {
-      // why resizer works only with this console.log
+      //resizer works only with this console.log...
       console.log(
         window.innerWidth > 992,
         window.innerWidth / window.innerHeight < 2,

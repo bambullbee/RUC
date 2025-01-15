@@ -12,9 +12,6 @@ interface menuItemPropsI extends bubblePropsI {
 }
 
 const MenuItem = ({ text, loc, style }: menuItemPropsI) => {
-  if (text == "О сайте") {
-    console.log(style);
-  }
   const dispatch = useDispatch();
   return (
     <div className="menu-item">

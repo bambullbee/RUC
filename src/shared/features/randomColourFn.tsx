@@ -7,6 +7,4 @@ function generateRandomColor() {
   return `#${randColor.toUpperCase()}`;
 }
 
-console.log(generateRandomColor());
-
 export default generateRandomColor;

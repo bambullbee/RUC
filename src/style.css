@@ -356,6 +356,7 @@ nav.wide-nav {
   color: var(--third-color);
   text-transform: uppercase;
   text-align: center;
+  cursor: pointer;
 }
 
 button span {
@@ -469,6 +470,7 @@ main {
   border-radius: 20px;
   animation: pop-banner 6s linear infinite;
   font-weight: 500;
+  cursor: pointer;
 }
 
 @keyframes pop-banner {
@@ -531,6 +533,8 @@ main {
 }
 
 .choose-answer {
+  position: relative;
+  z-index: 3;
   display: flex;
   justify-content: space-between;
 }
@@ -551,6 +555,26 @@ main {
   outline: none;
   animation: pop-up-sms 0.3s cubic-bezier(0, 0.87, 0.45, 0.74);
   font-size: var(--fz1);
+  cursor: pointer;
+}
+
+.answer__down-padding {
+  padding-bottom: 50px;
+}
+
+.answer-input {
+  position: absolute;
+  width: 25%;
+  top: calc(100% - 50px);
+  left: 72.5%;
+  text-align: center;
+  border: 2px solid var(--primary-color);
+  border-radius: 10px;
+  color: var(--primary-color);
+  font-weight: 800;
+  font-family: "Jost", sans-serif;
+  font-size: 20px;
+  outline: none;
 }
 
 /* SIDES */
@@ -851,6 +875,7 @@ main {
   background-color: var(--primary-HO-color);
   transition: background-color 0.2s, border-color 0.2s, opacity 0.3s;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .btn-display:before {
@@ -928,6 +953,7 @@ main {
   grid-area: f;
   color: var(--primary-color);
   font-weight: 600;
+  cursor: pointer;
 }
 
 .profile__item {
@@ -956,6 +982,7 @@ main {
   z-index: 10;
   overflow: hidden;
   display: flex;
+  cursor: pointer;
 }
 .profile-img__text {
   font-size: var(--fz1);
@@ -993,6 +1020,7 @@ main {
   border-radius: 10px;
   background-color: var(--third-color);
   animation: pop-banner 6s linear infinite;
+  cursor: pointer;
 }
 
 /* MEDIAQUERIES */
@@ -1114,6 +1142,12 @@ main {
 
   .answer {
     width: 100%;
+  }
+  .answer-input {
+    top: calc(100% - 37px);
+    width: 90%;
+    height: 30px;
+    left: 5%;
   }
 }
 

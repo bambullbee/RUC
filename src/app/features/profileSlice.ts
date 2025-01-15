@@ -36,7 +36,7 @@ const initialState: initialStateI = {
   mood: null,
   photo: { isPhoto: false, url: "", loading: "idle", error: null },
   paw: null,
-  loyalty: null,
+  loyalty: 0,
   isVisible: false,
   bannerUsed: false,
   sex: "male",
@@ -52,10 +52,10 @@ const profileSlice = createSlice({
     changeMood(state, action: PayloadAction<string>) {
       state.mood = action.payload;
     },
-    changePhoto(state, action: PayloadAction<photoI>) {
-      state.photo = action.payload;
-    },
     changePaw(state) {
+      if (state.paw === null) {
+        state.loyalty += 1;
+      }
       state.paw = [
         generateRandomColor(),
         generateRandomColor(),
@@ -74,7 +74,6 @@ const profileSlice = createSlice({
       state.bannerUsed = !state.bannerUsed;
     },
     changeSex(state, action) {
-      console.log("sex changer fired", action.payload);
       state.sex = action.payload;
     },
     reset() {
@@ -83,6 +82,9 @@ const profileSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchCatPhoto.fulfilled, (state, action) => {
+      if (state.photo.url === "") {
+        state.loyalty += 1;
+      }
       state.photo.url = action.payload;
     });
   },
@@ -93,7 +95,6 @@ export const {
   changeLoyalty,
   changeMood,
   changePaw,
-  changePhoto,
   reset,
   changeVisibility,
   changeBanner,

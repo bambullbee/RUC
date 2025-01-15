@@ -61,7 +61,8 @@ const Profile = () => {
         </div>
         <div className="profile__loyalty profile__item">
           <div className="profile__item__inner">
-            Котячье признание: {profile.loyalty ? profile.loyalty : "???"}
+            Котячье признание: {profile.loyalty ? profile.loyalty : "0"} лапок
+            из 9
           </div>
         </div>
         <button

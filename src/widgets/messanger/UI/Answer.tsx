@@ -8,7 +8,7 @@ import React, {
 import { processStringBySex } from "../features/processStringBySex";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
-import { changeSex } from "@/app/features/profileSlice";
+import { changeSex, changeSpecies } from "@/app/features/profileSlice";
 
 interface answerI {
   text: string;
@@ -36,6 +36,7 @@ const Answer = memo(
       }: answerI,
       ref: { current: HTMLElement }
     ) => {
+      const species = useSelector((state: RootState) => state.profile.species);
       const dispatch = useDispatch();
       const [isDisplayed, setIsDisplayed] = useState(
         timeout === 0 ? true : false
@@ -67,24 +68,40 @@ const Answer = memo(
       }, [isScrolling, isDisplayed]);
 
       return isDisplayed ? (
-        <button
-          onClick={() => {
-            if (extra) {
-              if (extra.t === "state") {
-                dispatch(extra.fn(extra.arg));
+        <>
+          <button
+            onClick={() => {
+              if (extra) {
+                if (extra.t === "state") {
+                  dispatch(extra.fn(extra.arg));
+                }
               }
-              if (extra.t === "input") {
-                // !!!
+              if (extra?.t === "input" && species.length === 0) {
+                return;
               }
+              onClick(partIndex, answerIndex);
+            }}
+            aria-label="Вариант ответа"
+            style={{ display: isHidden ? "none" : "block" }}
+            className={
+              extra?.t === "input" ? "answer answer__down-padding" : "answer"
             }
-            onClick(partIndex, answerIndex);
-          }}
-          className="answer"
-          aria-label="Вариант ответа"
-          style={{ display: isHidden ? "none" : "block" }}
-        >
-          {processStringBySex(text)}
-        </button>
+          >
+            {processStringBySex(text)}
+          </button>
+          {extra?.t === "input" ? (
+            <input
+              className="answer-input"
+              value={species}
+              placeholder="Кто ты?"
+              onChange={(e) => {
+                dispatch(changeSpecies(e.target.value));
+              }}
+            ></input>
+          ) : (
+            ""
+          )}
+        </>
       ) : (
         ""
       );

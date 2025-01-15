@@ -15,39 +15,7 @@ import data from "@/app/data/data";
 
 import Message from "./UI/Message";
 import Answer from "./UI/Answer";
-import Banner from "../../entities/Banner/components/Banner";
-
-function isEventSupported(eventName: keyof HTMLDivElement) {
-  var el = document.createElement("div");
-  (eventName as string) = "on" + eventName;
-  var isSupported = eventName in el;
-  if (!isSupported) {
-    el.setAttribute(eventName, "return;");
-    isSupported = typeof el[eventName as keyof HTMLDivElement] == "function";
-  }
-  el = null;
-  return isSupported;
-}
-
-function hasTouch() {
-  if (
-    navigator.userAgent.match(/iPhone/i) ||
-    navigator.userAgent.match(/iPad/i) ||
-    navigator.userAgent.match(/Android/i)
-  ) {
-    return true;
-  } else return false;
-}
-
-const isTouch = hasTouch();
-
-let touchOrMouse = isEventSupported("touchmove" as keyof HTMLDivElement)
-  ? "touchmove"
-  : "wheel";
-
-if (touchOrMouse === "wheel" && isTouch) {
-  touchOrMouse = "iPhone";
-}
+import touchOrMouse from "@/shared/features/touchOrMouseOrIphone";
 
 interface messangerPropsI {
   isScrolling: boolean;
@@ -56,10 +24,10 @@ interface messangerPropsI {
 
 const Messanger = memo(
   forwardRef(({ isScrolling, setIsScrolling }: messangerPropsI, ref) => {
-    // !!!
     const isTyping = useSelector((state: RootState) => {
       return state.mainState.isTyping;
     });
+    const species = useSelector((state: RootState) => state.profile.species);
     const restart = useSelector(
       (state: RootState) => state.navigation.isRestarted
     );
@@ -176,7 +144,11 @@ const Messanger = memo(
                   ) : (
                     <>
                       <Message
-                        text={el.part.na}
+                        text={
+                          data[el.index + 100].na[2].extra?.t === "input"
+                            ? `${el.part.na + species}`
+                            : el.part.na
+                        }
                         className="right-sms"
                         isHidden={el.isHidden}
                         timeout={0}
