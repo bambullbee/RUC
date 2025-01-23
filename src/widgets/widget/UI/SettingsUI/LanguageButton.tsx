@@ -15,12 +15,12 @@ const LanguageButton = () => {
         dispatch(changeTypingSpeed());
       }}
     >
-      Скорость печатанья{" "}
-      {typingSpeed === 1
-        ? "СРЕДНЯЯ"
-        : typingSpeed === 0.5
-        ? "НИЗКАЯ"
-        : "ВЫСОКАЯ"}
+      Печатать{" "}
+      {typingSpeed === 30
+        ? "ОБЫЧНО"
+        : typingSpeed === 20
+        ? "БЫСТРО"
+        : "МЕДЛЕННО"}
     </button>
   );
 };

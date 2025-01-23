@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
@@ -6,6 +6,7 @@ import { RootState } from "@/app/store";
 import type { currentLocation } from "@/shared/types";
 import { changeCurrentLocation } from "@/app/features/curerntLocationSlice";
 import { changeVisibility } from "@/app/features/profileSlice";
+import { transform } from "typescript";
 
 interface headerNavItemPropsI {
   title: string;
@@ -14,12 +15,13 @@ interface headerNavItemPropsI {
 }
 
 const HeaderNavItem = ({ title, zone, loc }: headerNavItemPropsI) => {
+  const ref = useRef(null);
   const dispatch = useDispatch();
   const currentLocation = useSelector((state: RootState) => {
     return state.currentLocation;
   });
   return (
-    <div className="wide-nav__link">
+    <div className="wide-nav__link" ref={loc === "about" ? ref : null}>
       <div className="wide-nav__inner-linkwrapper">
         <button
           onClick={() => {
@@ -27,6 +29,8 @@ const HeaderNavItem = ({ title, zone, loc }: headerNavItemPropsI) => {
               dispatch(changeCurrentLocation("none"));
             } else if (loc === "prof") {
               dispatch(changeVisibility());
+            } else if (loc === "about") {
+              dispatch(changeCurrentLocation(loc));
             } else {
               dispatch(changeCurrentLocation(loc));
             }

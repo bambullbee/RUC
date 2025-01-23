@@ -12,11 +12,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./store";
 import { currentLocation } from "@/shared/types";
 import Profile from "@/widgets/profile/Profile";
-import touchOrMouse from "@/shared/features/touchOrMouseOrIphone";
+import { changeIsScrolling } from "./features/mainStateSlice";
 
 const App = () => {
-  const [isScrolling, setIsScrolling] = useState(
-    touchOrMouse === "iPhone" ? true : false
+  const isScrolling = useSelector(
+    (state: RootState) => state.mainState.isScrolling
   );
   const currentLocation = useSelector(
     (state: RootState): currentLocation => state.currentLocation
@@ -41,7 +41,8 @@ const App = () => {
     <>
       <Header />
       <main>
-        <Messanger isScrolling={isScrolling} setIsScrolling={setIsScrolling} />
+        {/* <Messanger isScrolling={isScrolling} setIsScrolling={setIsScrolling} /> */}
+        <Messanger />
         <Widget />
         <button
           className="scroll-prevent-btn"
@@ -51,7 +52,7 @@ const App = () => {
               : "var(--secondary-HO-color)",
           }}
           onClick={() => {
-            setIsScrolling((prevState) => !prevState);
+            dispatch(changeIsScrolling());
             if (isScrolling) {
               const messangerBlock = document.querySelector(".dialogue-window");
               messangerBlock.scrollTo({

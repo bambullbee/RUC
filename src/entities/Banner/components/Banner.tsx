@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 
+import touchOrMouse from "@/shared/features/touchOrMouseOrIphone";
+
 interface bannerPropsI {
   isScrolling: boolean;
 }
 
 const Banner = ({ isScrolling }: bannerPropsI) => {
-  const [wasAppeared, setWasAppeared] = useState(false);
+  const [wasAppeared, setWasAppeared] = useState(
+    touchOrMouse === "iPhone" ? true : false
+  );
 
   return isScrolling && !wasAppeared ? (
     <div

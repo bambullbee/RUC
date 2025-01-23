@@ -451,6 +451,7 @@ main {
   border-radius: 50%;
   background-color: rgba(255, 64, 64, 0.068);
   transition: background-color 0.2s;
+  cursor: pointer;
 }
 
 .banner {
@@ -1117,8 +1118,7 @@ main {
 
   .dialogue-window {
     height: calc(100vh - 60px - 50vh);
-    padding: 0px;
-    padding-top: 5px;
+    padding: 5px;
   }
   .scroll-prevent-btn {
     right: 25px;

@@ -4,6 +4,7 @@ import React, {
   memo,
   useLayoutEffect,
   forwardRef,
+  MutableRefObject,
 } from "react";
 import { processStringBySex } from "../features/processStringBySex";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,85 +14,59 @@ import {
   changeSex,
   changeSpecies,
 } from "@/app/features/profileSlice";
+import { extraI } from "../types/types";
 
 interface answerI {
   text: string;
-  answerIndex: number;
-  partIndex: number;
-  onClick: (partIndex: number, answerIndex: number) => void;
-  isHidden: boolean;
-  timeout: number;
-  isScrolling: boolean;
-  extra?: any;
+  index: number;
+  onClick: (index: number) => void;
+  extra: extraI;
 }
 
-const Answer = memo(
-  forwardRef(
-    (
-      {
-        text,
-        answerIndex,
-        partIndex,
-        onClick,
-        isHidden,
-        timeout,
-        isScrolling,
-        extra,
-      }: answerI,
-      ref: { current: HTMLElement }
-    ) => {
-      const species = useSelector((state: RootState) => state.profile.species);
-      const dispatch = useDispatch();
-      const [isDisplayed, setIsDisplayed] = useState(
-        timeout === 0 ? true : false
-      );
-
-      useEffect(() => {
-        const timer = setTimeout(() => {
-          if (!isDisplayed) {
-            setIsDisplayed(!isDisplayed);
-          }
-        }, timeout);
-        return () => {
-          clearTimeout(timer);
-        };
-      }, []);
-
-      useEffect(() => {
-        const timer = setTimeout(() => {
-          if (isDisplayed && !isScrolling) {
-            ref.current.scrollTo({
-              top: ref.current.scrollHeight,
-              behavior: "smooth",
-            });
-          }
-        }, 300);
-        return () => {
-          clearTimeout(timer);
-        };
-      }, [isScrolling, isDisplayed]);
-
-      return isDisplayed ? (
+const Answer = (
+  { text, index, onClick, extra }: answerI,
+  ref: MutableRefObject<HTMLElement>
+) => {
+  const dispatch = useDispatch();
+  const isScrolling = useSelector(
+    (state: RootState) => state.mainState.isScrolling
+  );
+  const species = useSelector((state: RootState) => state.profile.species);
+  const [isVisible, setIsVisible] = useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => setIsVisible(true), 500);
+    return () => clearTimeout(timer);
+  }, []);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!isScrolling) {
+        ref.current.scrollTo({
+          top: ref.current.scrollHeight,
+          behavior: "smooth",
+        });
+      }
+    }, 800);
+  }, []);
+  return (
+    <>
+      {isVisible ? (
         <>
+          {" "}
           <button
+            className={
+              extra?.t === "input" ? "answer answer__down-padding" : "answer"
+            }
             onClick={() => {
               if (extra) {
                 if (extra.t === "state") {
                   dispatch(extra.fn(extra.arg));
-                } else if (extra.t === "rate") {
+                }
+                if (extra.t === "rate") {
                   dispatch(changeLoyalty(extra.v));
                 }
               }
-              if (extra?.t === "input" && species.length === 0) {
-                return;
-              }
-              onClick(partIndex, answerIndex);
+              onClick(index);
             }}
-            aria-label="Вариант ответа"
-            style={{ display: isHidden ? "none" : "block" }}
-            className={
-              extra?.t === "input" ? "answer answer__down-padding" : "answer"
-            }
           >
             {processStringBySex(text)}
           </button>
@@ -110,9 +85,9 @@ const Answer = memo(
         </>
       ) : (
         ""
-      );
-    }
-  )
-);
+      )}
+    </>
+  );
+};
 
-export default Answer;
+export default memo(forwardRef(Answer));
