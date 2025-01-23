@@ -2,8 +2,8 @@ type currentLocation =
   | "about"
   | "sett"
   | "prof"
-  | "quests"
-  | "dict"
+  | "test"
+  | "life"
   | "menu"
   | "none";
 

@@ -12,8 +12,8 @@ const titles: { title: string; zone: string; loc: currentLocation }[] = [
   { title: "О сайте", zone: "side", loc: "about" },
   { title: "Настройки", zone: "inter", loc: "sett" },
   { title: "Профиль", zone: "center", loc: "prof" },
-  { title: "Занятия", zone: "inter", loc: "quests" },
-  { title: "Словарик", zone: "side", loc: "dict" },
+  { title: "Тест", zone: "inter", loc: "test" },
+  { title: "О жизни", zone: "side", loc: "life" },
 ];
 
 const Header = memo(() => {

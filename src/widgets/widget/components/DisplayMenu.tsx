@@ -7,8 +7,8 @@ const titles: { title: string; loc: currentLocation }[] = [
   { title: "О сайте", loc: "about" },
   { title: "Настройки", loc: "sett" },
   { title: "Профиль", loc: "prof" },
-  { title: "Занятия", loc: "quests" },
-  { title: "Словарик", loc: "dict" },
+  { title: "Тест", loc: "test" },
+  { title: "О жизни", loc: "life" },
 ];
 
 const DisplayMenu = ({ style }: bubblePropsI) => {
