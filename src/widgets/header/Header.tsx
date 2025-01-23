@@ -22,7 +22,7 @@ const Header = memo(() => {
     return state.currentLocation;
   });
   return (
-    <header>
+    <header className={currentLocation === "about" ? "header__out" : ""}>
       <nav className="wide-nav">
         {titles.map((el) => {
           return <HeaderNavItem title={el.title} zone={el.zone} loc={el.loc} />;

@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { memo, useMemo } from "react";
 
 import MicroBubble from "./MicroBubble";
 import { bubblePropsI } from "@/widgets/widget/types/types";
@@ -25,4 +25,4 @@ const Bubble = ({ classNameIndex, style }: BubblePropsI) => {
   );
 };
 
-export default Bubble;
+export default memo(Bubble);

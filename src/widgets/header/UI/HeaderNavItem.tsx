@@ -29,8 +29,6 @@ const HeaderNavItem = ({ title, zone, loc }: headerNavItemPropsI) => {
               dispatch(changeCurrentLocation("none"));
             } else if (loc === "prof") {
               dispatch(changeVisibility());
-            } else if (loc === "about") {
-              dispatch(changeCurrentLocation(loc));
             } else {
               dispatch(changeCurrentLocation(loc));
             }

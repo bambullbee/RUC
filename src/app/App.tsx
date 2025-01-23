@@ -13,6 +13,7 @@ import { RootState } from "./store";
 import { currentLocation } from "@/shared/types";
 import Profile from "@/widgets/profile/Profile";
 import { changeIsScrolling } from "./features/mainStateSlice";
+import { About } from "@/widgets/about";
 
 const App = () => {
   const isScrolling = useSelector(
@@ -45,7 +46,9 @@ const App = () => {
         <Messanger />
         <Widget />
         <button
-          className="scroll-prevent-btn"
+          className={`scroll-prevent-btn ${
+            currentLocation === "about" ? "dialogue__out" : ""
+          }`}
           style={{
             backgroundColor: isScrolling
               ? "var(--primary-HO-color)"
@@ -63,8 +66,9 @@ const App = () => {
           }}
         ></button>
         <Banner isScrolling={isScrolling} />
+        <Profile />
+        <About />
       </main>
-      <Profile />
       <GlobalBg />
     </>
   );

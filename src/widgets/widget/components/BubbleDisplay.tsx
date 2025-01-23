@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import Bubble from "../UI/BubblesUI/Bubble";
 
 import { bubblePropsI } from "../types/types";
@@ -11,4 +11,4 @@ const BubbleDisplay = ({ style }: bubblePropsI) => {
   return <>{entities}</>;
 };
 
-export default BubbleDisplay;
+export default memo(BubbleDisplay);

@@ -21,6 +21,8 @@ import Answer from "./UI/Answer";
 import touchOrMouse from "@/shared/features/touchOrMouseOrIphone";
 import { extraI, setCurrentMessageTypeT } from "./types/types";
 import { changeIsScrolling } from "@/app/features/mainStateSlice";
+import { currentLocation } from "@/shared/types";
+import Banner from "@/entities/Banner/components/Banner";
 
 interface messangerPropsI {
   isScrolling: boolean;
@@ -66,6 +68,9 @@ function changeCurrentMessageType(
 const Messanger = memo(() => {
   const dispatch = useDispatch();
   const messanger = useRef(null);
+  const currentLocation = useSelector(
+    (state: RootState) => state.currentLocation
+  ) as currentLocation;
   const currentMessangerPosition = useSelector((state: RootState) => ({
     curLocPart: state.navigation.routes[state.navigation.currentLocation],
     curLocPartTitle: state.navigation.currentLocation,
@@ -193,7 +198,9 @@ const Messanger = memo(() => {
 
   return (
     <section
-      className="dialogue-window container"
+      className={`dialogue-window container ${
+        currentLocation === "about" ? "dialogue__out" : ""
+      }`}
       aria-label="Диалоговое окно"
       ref={messanger}
     >

@@ -22,7 +22,12 @@ const Widget = memo(() => {
     return () => clearTimeout(timer);
   }, [currentLoc]);
   return (
-    <section className="app-section container" aria-label="Виджет">
+    <section
+      className={`app-section container ${
+        currentLoc === "about" ? " widget__out" : ""
+      }`}
+      aria-label="Виджет"
+    >
       <div className="right">
         <div className="phone-container">
           <div className="phone">
