@@ -1,16 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-type messangerSectionT = "test" | "about";
+type messangerSectionT = "test" | "life";
 type part = { part: number; answers: (0 | 1 | 2)[] };
 
 let test: part = { part: 100, answers: [] };
-let about: part = { part: 200, answers: [] };
+let life: part = { part: 200, answers: [] };
 let currentLocation: messangerSectionT = "test";
 
 interface routesI {
   test: part;
-  about: part;
+  life: part;
 }
 
 interface initialStateI {
@@ -20,7 +20,7 @@ interface initialStateI {
 }
 
 const initialState: initialStateI = {
-  routes: { test, about },
+  routes: { test, life },
   currentLocation,
   isRestarted: 0,
 };
@@ -30,18 +30,13 @@ const navigationSlice = createSlice({
   initialState,
   reducers: {
     inPartMove(state) {
-      state.routes[currentLocation].part += 0.01;
-      localStorage.setItem(
-        currentLocation,
-        state.routes[currentLocation].toString()
-      );
+      state.routes[state.currentLocation].part += 0.01;
     },
     interPartMove(state, action: PayloadAction<messangerSectionT>) {
       state.currentLocation = action.payload;
-      localStorage.setItem("currentLocation", action.payload);
     },
     restart(state) {
-      state.routes = { test, about };
+      state.routes = { test, life };
       state.currentLocation = "test";
       state.isRestarted += 1;
     },

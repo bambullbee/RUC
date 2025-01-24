@@ -7,6 +7,7 @@ import type { currentLocation } from "@/shared/types";
 import { changeCurrentLocation } from "@/app/features/curerntLocationSlice";
 import { changeVisibility } from "@/app/features/profileSlice";
 import { transform } from "typescript";
+import { interPartMove } from "@/app/features/navigationSlice";
 
 interface headerNavItemPropsI {
   title: string;
@@ -29,6 +30,10 @@ const HeaderNavItem = ({ title, zone, loc }: headerNavItemPropsI) => {
               dispatch(changeCurrentLocation("none"));
             } else if (loc === "prof") {
               dispatch(changeVisibility());
+            } else if (loc === "test") {
+              dispatch(interPartMove(loc));
+            } else if (loc === "life") {
+              dispatch(interPartMove(loc));
             } else {
               dispatch(changeCurrentLocation(loc));
             }

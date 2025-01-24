@@ -2,8 +2,8 @@ import { RootState } from "@/app/store";
 import React, { forwardRef, memo, useEffect, useRef, useState } from "react";
 import { MutableRefObject } from "react";
 import { useSelector } from "react-redux";
-import { processStringBySex } from "../features/processStringBySex";
-import { setCurrentMessageTypeT } from "../types/types";
+import { processStringBySex } from "@/features/test/features/processStringBySex";
+import { setCurrentMessageTypeT } from "@/features/test/types/types";
 
 type className = "right-sms" | "left-sms";
 
@@ -50,7 +50,7 @@ const Message = (
           });
         }
         timer = setTimeout(() => {
-          setCurrentText((prevState) => {
+          setCurrentText((prevState: string) => {
             if (text[prevState.length] === "s") {
               if (sex === "female") {
                 return prevState + "a";

@@ -2,18 +2,13 @@ import React, {
   useEffect,
   useState,
   memo,
-  useLayoutEffect,
   forwardRef,
   MutableRefObject,
 } from "react";
 import { processStringBySex } from "../features/processStringBySex";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
-import {
-  changeLoyalty,
-  changeSex,
-  changeSpecies,
-} from "@/app/features/profileSlice";
+import { changeLoyalty, changeSpecies } from "@/app/features/profileSlice";
 import { extraI } from "../types/types";
 
 interface answerI {

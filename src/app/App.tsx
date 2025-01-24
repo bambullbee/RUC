@@ -25,6 +25,10 @@ const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     function resizeHandler() {
+      // console.log(
+      //   window.innerWidth > 992,
+      //   window.innerWidth / window.innerHeight < 2
+      // );
       if (
         window.innerWidth > 992 &&
         window.innerWidth / window.innerHeight < 2
@@ -42,7 +46,6 @@ const App = () => {
     <>
       <Header />
       <main>
-        {/* <Messanger isScrolling={isScrolling} setIsScrolling={setIsScrolling} /> */}
         <Messanger />
         <Widget />
         <button
