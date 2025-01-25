@@ -4,7 +4,9 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 type messangerSectionT = "test" | "life";
 type part = { part: number; answers: (0 | 1 | 2)[] };
 
-let test: part = { part: 100, answers: [] };
+let test: part = localStorage.getItem("test")
+  ? (JSON.parse(localStorage.getItem("test")) as part)
+  : { part: 100, answers: [] };
 let life: part = { part: 200, answers: [] };
 let currentLocation: messangerSectionT = "test";
 
@@ -16,13 +18,11 @@ interface routesI {
 interface initialStateI {
   routes: routesI;
   currentLocation: keyof routesI;
-  isRestarted: number;
 }
 
 const initialState: initialStateI = {
   routes: { test, life },
   currentLocation,
-  isRestarted: 0,
 };
 
 const navigationSlice = createSlice({
@@ -30,20 +30,28 @@ const navigationSlice = createSlice({
   initialState,
   reducers: {
     inPartMove(state, action: PayloadAction<0 | 1 | 2>) {
+      if (state.currentLocation === "test") {
+        localStorage.setItem(
+          "test",
+          JSON.stringify({
+            part: state.routes.test.part + 1,
+            answers: [...state.routes.test.answers, action.payload],
+          })
+        );
+      }
       state.routes[state.currentLocation].part += 1;
       state.routes[state.currentLocation].answers.push(action.payload);
     },
     interPartMove(state, action: PayloadAction<messangerSectionT>) {
       state.currentLocation = action.payload;
     },
-    restart(state) {
-      state.routes = { test, life };
-      state.currentLocation = "test";
-      state.isRestarted += 1;
+    resetNav() {
+      localStorage.clear();
+      return initialState;
     },
   },
 });
 
-export const { inPartMove, interPartMove, restart } = navigationSlice.actions;
+export const { inPartMove, interPartMove, resetNav } = navigationSlice.actions;
 
 export default navigationSlice.reducer;

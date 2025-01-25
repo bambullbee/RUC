@@ -11,9 +11,13 @@ const currentLocationSlice = createSlice({
     changeCurrentLocation: (state, action: PayloadAction<any>) => {
       return action.payload;
     },
+    resetCur() {
+      localStorage.clear();
+      return initialState;
+    },
   },
 });
 
-export const { changeCurrentLocation } = currentLocationSlice.actions;
+export const { changeCurrentLocation, resetCur } = currentLocationSlice.actions;
 
 export default currentLocationSlice.reducer;

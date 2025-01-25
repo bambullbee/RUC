@@ -3,13 +3,30 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const body = document.querySelector("body");
 
-const theme =
+let theme: "dark" | "light" =
   window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
     ? "dark"
     : "light";
 if (theme === "dark") {
   body.classList.add("dark");
 }
+
+const personality =
+  localStorage.getItem("personality") !== null
+    ? localStorage.getItem("personality")
+    : "human";
+const typingSpeed =
+  localStorage.getItem("typingSpeed") !== null
+    ? (parseInt(localStorage.getItem("typingSpeed")) as 20 | 30 | 40)
+    : 30;
+theme =
+  localStorage.getItem("theme") !== null
+    ? (localStorage.getItem("theme") as "dark" | "light")
+    : theme;
+const isTyping =
+  localStorage.getItem("isTyping") !== null
+    ? !!localStorage.getItem("isTyping")
+    : true;
 
 type initialMainState = {
   theme: "dark" | "light";
@@ -21,9 +38,9 @@ type initialMainState = {
 
 const initialState: initialMainState = {
   theme,
-  personality: "human",
-  typingSpeed: 30,
-  isTyping: true,
+  personality,
+  typingSpeed,
+  isTyping,
   isScrolling: touchOrMouse === "iPhone" ? true : false,
 };
 
@@ -33,6 +50,7 @@ const mainStateSlice = createSlice({
   reducers: {
     changeTheme(state, action: PayloadAction<"dark" | "light">) {
       state.theme = action.payload;
+      localStorage.setItem("theme", action.payload);
       if (action.payload === "dark") {
         body.classList.add("dark");
       } else {
@@ -41,6 +59,7 @@ const mainStateSlice = createSlice({
     },
     changePersonality(state, action: PayloadAction<string>) {
       state.personality = action.payload;
+      localStorage.setItem("personality", action.payload);
     },
     changeTypingSpeed(state) {
       if (state.typingSpeed === 40) {
@@ -48,9 +67,11 @@ const mainStateSlice = createSlice({
       } else {
         state.typingSpeed += 10;
       }
+      localStorage.setItem("typingSpeed", state.typingSpeed.toString());
     },
     changeIsTyping(state, action: PayloadAction<boolean>) {
       state.isTyping = action.payload;
+      localStorage.setItem("isTyping", !action.payload ? "" : "true");
     },
     changeIsScrolling(state, action: PayloadAction<boolean> = undefined) {
       if (action.payload) {
@@ -59,10 +80,15 @@ const mainStateSlice = createSlice({
         state.isScrolling = !state.isScrolling;
       }
     },
+    resetMain() {
+      localStorage.clear();
+      return initialState;
+    },
   },
 });
 
 export const {
+  resetMain,
   changeTheme,
   changeIsTyping,
   changePersonality,
