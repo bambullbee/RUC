@@ -29,8 +29,9 @@ const navigationSlice = createSlice({
   name: "navigation",
   initialState,
   reducers: {
-    inPartMove(state) {
-      state.routes[state.currentLocation].part += 0.01;
+    inPartMove(state, action: PayloadAction<0 | 1 | 2>) {
+      state.routes[state.currentLocation].part += 1;
+      state.routes[state.currentLocation].answers.push(action.payload);
     },
     interPartMove(state, action: PayloadAction<messangerSectionT>) {
       state.currentLocation = action.payload;

@@ -5,6 +5,7 @@ import { changeCurrentLocation } from "@/app/features/curerntLocationSlice";
 import { changeVisibility } from "@/app/features/profileSlice";
 
 import { bubblePropsI } from "../types/types";
+import { interPartMove } from "@/app/features/navigationSlice";
 
 interface menuItemPropsI extends bubblePropsI {
   text: string;
@@ -19,6 +20,10 @@ const MenuItem = ({ text, loc, style }: menuItemPropsI) => {
         className="menu-item__inner btn-display"
         style={{ opacity: style }}
         onClick={() => {
+          if (loc === "life" || loc === "test") {
+            dispatch(interPartMove(loc));
+            return undefined;
+          }
           if (loc !== "prof") {
             dispatch(changeCurrentLocation(loc));
           } else {

@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { type RootState } from "@/app/store";
 import { currentLocation } from "@/shared/types";
 import { Test } from "@/features/test";
+import { Life } from "@/features/life";
 
 const Messanger = () => {
   const messanger = useRef(null);
@@ -20,7 +21,7 @@ const Messanger = () => {
       aria-label="Диалоговое окно"
       ref={messanger}
     >
-      {mainNav === "test" ? <Test ref={messanger} /> : ""}
+      {mainNav === "test" ? <Test ref={messanger} /> : <Life />}
     </section>
   );
 };

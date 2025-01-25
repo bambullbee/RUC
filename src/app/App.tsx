@@ -22,6 +22,9 @@ const App = () => {
   const currentLocation = useSelector(
     (state: RootState): currentLocation => state.currentLocation
   );
+  const mainNav = useSelector(
+    (state: RootState) => state.navigation.currentLocation
+  );
   const dispatch = useDispatch();
   useEffect(() => {
     function resizeHandler() {
@@ -48,26 +51,32 @@ const App = () => {
       <main>
         <Messanger />
         <Widget />
-        <button
-          className={`scroll-prevent-btn ${
-            currentLocation === "about" ? "dialogue__out" : ""
-          }`}
-          style={{
-            backgroundColor: isScrolling
-              ? "var(--primary-HO-color)"
-              : "var(--secondary-HO-color)",
-          }}
-          onClick={() => {
-            dispatch(changeIsScrolling());
-            if (isScrolling) {
-              const messangerBlock = document.querySelector(".dialogue-window");
-              messangerBlock.scrollTo({
-                top: messangerBlock.scrollHeight,
-                behavior: "smooth",
-              });
-            }
-          }}
-        ></button>
+        {mainNav === "test" ? (
+          <button
+            className={`scroll-prevent-btn ${
+              currentLocation === "about" ? "dialogue__out" : ""
+            }`}
+            style={{
+              backgroundColor: isScrolling
+                ? "var(--primary-HO-color)"
+                : "var(--secondary-HO-color)",
+            }}
+            onClick={() => {
+              dispatch(changeIsScrolling());
+              if (isScrolling) {
+                const messangerBlock =
+                  document.querySelector(".dialogue-window");
+                messangerBlock.scrollTo({
+                  top: messangerBlock.scrollHeight,
+                  behavior: "smooth",
+                });
+              }
+            }}
+          ></button>
+        ) : (
+          ""
+        )}
+
         <Banner isScrolling={isScrolling} />
         <Profile />
         <About />

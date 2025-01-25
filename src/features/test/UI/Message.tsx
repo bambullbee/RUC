@@ -15,15 +15,18 @@ interface MessagePropsI {
   speed?: number;
   type: setCurrentMessageTypeT;
   endHandler: (type: string) => void;
+  fixed: boolean;
 }
 
 const Message = (
-  { text, className, speed, isTyping, type, endHandler }: MessagePropsI,
+  { text, className, speed, isTyping, type, endHandler, fixed }: MessagePropsI,
   ref: MutableRefObject<HTMLElement>
 ) => {
   const [isVisible, setIsVisible] = useState(false);
   const [currentText, setCurrentText] = useState(
-    className === "left-sms" && isTyping ? "" : processStringBySex(text)
+    className === "left-sms" && isTyping && !fixed
+      ? ""
+      : processStringBySex(text)
   );
   const sex = useSelector((state: RootState) => state.profile.sex);
   const isScrolling = useSelector(
@@ -34,7 +37,11 @@ const Message = (
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>;
     //micro delay for each message
-    timer = setTimeout(() => setIsVisible(true), 300);
+    if (fixed) {
+      setIsVisible(true);
+    } else {
+      timer = setTimeout(() => setIsVisible(true), 300);
+    }
     return () => clearTimeout(timer);
   }, []);
 
@@ -72,7 +79,9 @@ const Message = (
           });
         }, speed);
       } else {
-        endHandler(type);
+        if (!fixed) {
+          endHandler(type);
+        }
       }
     }
     return () => clearTimeout(timer);

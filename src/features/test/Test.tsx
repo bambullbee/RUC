@@ -27,6 +27,7 @@ interface messageI {
   isTyping?: boolean;
   part: number;
   extra?: extraI[];
+  fixed: boolean;
 }
 
 const Test = ({}: testI, ref: MutableRefObject<HTMLElement>) => {
@@ -56,18 +57,22 @@ const Test = ({}: testI, ref: MutableRefObject<HTMLElement>) => {
           isTyping: false,
           part: curPart,
           text: data[curPart].q,
+          fixed: true,
         });
+        console.log(dataBlock, "check");
         messagesCopy.push({
           type: "answer",
           isTyping: false,
           part: curPart,
           text: dataBlock.a,
+          fixed: true,
         });
         messagesCopy.push({
           type: "response",
           isTyping: false,
           part: curPart,
           text: dataBlock.r,
+          fixed: true,
         });
         curPart += 1;
       }
@@ -79,6 +84,7 @@ const Test = ({}: testI, ref: MutableRefObject<HTMLElement>) => {
           lastMessageLength: messagesCopy[messagesCopy.length - 1]?.text.length,
           part: curPart,
           text: data[curPart].q,
+          fixed: false,
         });
       }
 
@@ -97,6 +103,7 @@ const Test = ({}: testI, ref: MutableRefObject<HTMLElement>) => {
           part: copy[copy.length - 1].part,
           text: [block[0].a, block[1].a, block[2].a],
           extra: [block[0].extra, block[1].extra, block[2].extra],
+          fixed: false,
         });
         return copy;
       });
@@ -104,11 +111,12 @@ const Test = ({}: testI, ref: MutableRefObject<HTMLElement>) => {
     if (type === "answer") {
       part = copy[copy.length - 1].part;
       copy.push({
-        text: data[part].na[copy[copy.length - 1].answerNum].r,
+        text: data[part].na[copy[copy.length - 1].answerNum]?.r,
         part,
         type: "response",
         isTyping,
         speed,
+        fixed: false,
       });
       setMessages(copy);
     }
@@ -122,9 +130,9 @@ const Test = ({}: testI, ref: MutableRefObject<HTMLElement>) => {
         isTyping,
         previousMessageSpeed: copy[copy.length - 1].speed,
         lastMessageLength: copy[copy.length - 1].text.length,
+        fixed: false,
       });
       setMessages(copy);
-      dispatch(inPartMove());
     }
   }
   function chooseAnswerHandler(index: number) {
@@ -137,8 +145,10 @@ const Test = ({}: testI, ref: MutableRefObject<HTMLElement>) => {
         (blockNum === 102 && index === 2 ? species : ""),
       part: blockNum,
       answerNum: index as 0 | 1 | 2,
+      fixed: false,
     };
     setMessages(copy);
+    dispatch(inPartMove(index as 0 | 1 | 2));
   }
 
   useEffect(() => {
@@ -146,12 +156,12 @@ const Test = ({}: testI, ref: MutableRefObject<HTMLElement>) => {
       dispatch(changeIsScrolling(true));
     }
     if (touchOrMouse === "wheel") {
-      messanger.current.addEventListener("wheel", wheelOrTouchmoveHandler);
+      messanger.current?.addEventListener("wheel", wheelOrTouchmoveHandler);
     } else if (touchOrMouse === "touchmove") {
-      messanger.current.addEventListener("touchmove", wheelOrTouchmoveHandler);
+      messanger.current?.addEventListener("touchmove", wheelOrTouchmoveHandler);
     }
     return () =>
-      messanger.current.removeEventListener(
+      messanger.current?.removeEventListener(
         touchOrMouse === "wheel" ? "wheel" : "touchmove",
         wheelOrTouchmoveHandler
       );
@@ -173,6 +183,7 @@ const Test = ({}: testI, ref: MutableRefObject<HTMLElement>) => {
               lastMessageLength={el.lastMessageLength}
               endHandler={endOfMessageHandler}
               ref={messanger}
+              fixed={el.fixed}
             />
           );
         }
@@ -201,6 +212,7 @@ const Test = ({}: testI, ref: MutableRefObject<HTMLElement>) => {
               className="right-sms"
               endHandler={endOfMessageHandler}
               ref={messanger}
+              fixed={el.fixed}
             />
           );
         }
@@ -214,6 +226,7 @@ const Test = ({}: testI, ref: MutableRefObject<HTMLElement>) => {
               speed={el.speed}
               endHandler={endOfMessageHandler}
               ref={messanger}
+              fixed={el.fixed}
             />
           );
         }
