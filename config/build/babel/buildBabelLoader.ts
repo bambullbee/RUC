@@ -32,7 +32,7 @@ export function buildBabelLoader(options: BuildOptions) {
           [
             "@babel/preset-react",
             {
-              runtime: isDev ? "automatic" : "classic",
+              runtime: "automatic",
             },
           ],
         ],
