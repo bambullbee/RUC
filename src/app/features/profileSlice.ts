@@ -6,8 +6,20 @@ import { createAppAsyncThunk } from "@/shared/withTypes/createAsyncThunk";
 
 export const fetchCatPhoto = createAppAsyncThunk(
   "profile/fetchCatPhoto",
-  async () => {
-    const response = await fetch("https://api.thecatapi.com/v1/images/search");
+  async (_, { rejectWithValue }) => {
+    let response;
+    try {
+      response = await fetch("https://api.thecatapi.com/v1/images/search");
+    } catch (error) {
+      return rejectWithValue(
+        navigator.onLine
+          ? "Ошибка! Мы над ней уже работаем."
+          : "Проверьте Ваше соединение"
+      );
+    }
+    if (!response.ok) {
+      return rejectWithValue("Ошибка! Мы над ней уже работаем.");
+    }
     const data = await response.json();
     localStorage.setItem("url", data[0].url);
     return data[0].url;
@@ -18,7 +30,7 @@ type paw = [string, string, string, string, string];
 interface photoI {
   isPhoto: boolean;
   url: string;
-  loading: "idle" | "pending" | "success" | "error";
+  loading: "idle" | "pending" | "error";
   error: string;
 }
 
@@ -116,7 +128,16 @@ const profileSlice = createSlice({
       if (state.photo.url === "") {
         state.loyalty += 1;
       }
+      state.photo.loading = "idle";
       state.photo.url = action.payload;
+      state.photo.error = null;
+    });
+    builder.addCase(fetchCatPhoto.pending, (state) => {
+      state.photo.loading = "pending";
+    });
+    builder.addCase(fetchCatPhoto.rejected, (state, action) => {
+      state.photo.loading = "error";
+      state.photo.error = action.payload as string;
     });
   },
 });

@@ -24,13 +24,17 @@ const Profile = () => {
     <div className="profile" style={style}>
       <div className="profile__container ">
         <button
-          className="profile__img profile__item"
+          className={`profile__img profile__item ${
+            profile.photo.loading === "pending" ? "profile__img__loading" : ""
+          }`}
           onClick={() => {
             dispatch(fetchCatPhoto() as any);
           }}
         >
           {profile.photo.url && !profile.photo.error ? (
             <ProfilePhoto src={profile.photo.url} />
+          ) : profile.photo.loading === "error" ? (
+            <div className="photo-error">{profile.photo.error}</div>
           ) : (
             <QuestionMarkSVG />
           )}
