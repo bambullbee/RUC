@@ -25,6 +25,20 @@ const initialState: initialStateI = {
   currentLocation,
 };
 
+const veryInitialState: initialStateI = {
+  routes: {
+    test: {
+      part: 100,
+      answers: [],
+    },
+    life: {
+      part: 200,
+      answers: [],
+    },
+  },
+  currentLocation: "test",
+};
+
 const navigationSlice = createSlice({
   name: "navigation",
   initialState,
@@ -47,7 +61,7 @@ const navigationSlice = createSlice({
     },
     resetNav() {
       localStorage.clear();
-      return initialState;
+      return veryInitialState;
     },
   },
 });

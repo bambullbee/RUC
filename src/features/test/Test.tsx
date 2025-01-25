@@ -10,8 +10,10 @@ import React, {
   forwardRef,
   memo,
   MutableRefObject,
+  RefObject,
   useEffect,
   useLayoutEffect,
+  useRef,
   useState,
 } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -33,6 +35,7 @@ interface messageI {
 const Test = ({}: testI, ref: MutableRefObject<HTMLElement>) => {
   const dispatch = useDispatch();
   const messanger = ref;
+  const messangerInner: RefObject<HTMLDivElement> = useRef(null);
 
   const currentMessangerPosition = useSelector((state: RootState) => ({
     curLocPart: state.navigation.routes[state.navigation.currentLocation],
@@ -43,54 +46,65 @@ const Test = ({}: testI, ref: MutableRefObject<HTMLElement>) => {
   const isTyping = useSelector((state: RootState) => state.mainState.isTyping);
   const [messages, setMessages] = useState<messageI[]>([]);
   const species = useSelector((state: RootState) => state.profile.species);
+  const isRestarted = useSelector(
+    (state: RootState) => state.mainState.restarted
+  );
   useLayoutEffect(() => {
-    const messagesCopy: messageI[] = [];
-    let curPart = currentMessangerPosition.curLocPartTitleNum;
-    setMessages(() => {
-      while (currentMessangerPosition.curLocPart.part > curPart) {
-        const dataBlock =
-          data[curPart].na[
-            currentMessangerPosition.curLocPart.answers[curPart - 100]
-          ];
-        messagesCopy.push({
-          type: "question",
-          isTyping: false,
-          part: curPart,
-          text: data[curPart].q,
-          fixed: true,
-        });
-        console.log(dataBlock, "check");
-        messagesCopy.push({
-          type: "answer",
-          isTyping: false,
-          part: curPart,
-          text: dataBlock.a,
-          fixed: true,
-        });
-        messagesCopy.push({
-          type: "response",
-          isTyping: false,
-          part: curPart,
-          text: dataBlock.r,
-          fixed: true,
-        });
-        curPart += 1;
-      }
-      if (currentMessangerPosition.curLocPart.part === curPart) {
-        messagesCopy.push({
-          type: "question",
-          isTyping,
-          speed,
-          lastMessageLength: messagesCopy[messagesCopy.length - 1]?.text.length,
-          part: curPart,
-          text: data[curPart].q,
-          fixed: false,
-        });
-      }
+    setMessages([]);
+    if (messanger.current) {
+      messanger.current.style.minHeight = "initial";
+    }
+    const timer = setTimeout(() => {
+      const messagesCopy: messageI[] = [];
+      console.log("restarted");
+      let curPart = currentMessangerPosition.curLocPartTitleNum;
+      setMessages(() => {
+        while (currentMessangerPosition.curLocPart.part > curPart) {
+          const dataBlock =
+            data[curPart].na[
+              currentMessangerPosition.curLocPart.answers[curPart - 100]
+            ];
+          messagesCopy.push({
+            type: "question",
+            isTyping: false,
+            part: curPart,
+            text: data[curPart].q,
+            fixed: true,
+          });
+          console.log(dataBlock, "check");
+          messagesCopy.push({
+            type: "answer",
+            isTyping: false,
+            part: curPart,
+            text: dataBlock.a,
+            fixed: true,
+          });
+          messagesCopy.push({
+            type: "response",
+            isTyping: false,
+            part: curPart,
+            text: dataBlock.r,
+            fixed: true,
+          });
+          curPart += 1;
+        }
+        if (currentMessangerPosition.curLocPart.part === curPart) {
+          messagesCopy.push({
+            type: "question",
+            isTyping,
+            speed,
+            lastMessageLength:
+              messagesCopy[messagesCopy.length - 1]?.text.length,
+            part: curPart,
+            text: data[curPart].q,
+            fixed: false,
+          });
+        }
 
-      return messagesCopy;
-    });
-  }, []);
+        return messagesCopy;
+      });
+    }, 100);
+  }, [isRestarted]);
 
   function endOfMessageHandler(type: setCurrentMessageTypeT) {
     const copy = [...messages];
@@ -147,6 +161,8 @@ const Test = ({}: testI, ref: MutableRefObject<HTMLElement>) => {
       answerNum: index as 0 | 1 | 2,
       fixed: false,
     };
+    messangerInner.current.style.minHeight =
+      messangerInner.current.scrollHeight + "px";
     setMessages(copy);
     dispatch(inPartMove(index as 0 | 1 | 2));
   }
@@ -168,7 +184,7 @@ const Test = ({}: testI, ref: MutableRefObject<HTMLElement>) => {
   }, []);
 
   return (
-    <>
+    <div className="dialogue__inner" ref={messangerInner}>
       {" "}
       {messages.map((el) => {
         if (el.type === "question") {
@@ -231,7 +247,7 @@ const Test = ({}: testI, ref: MutableRefObject<HTMLElement>) => {
           );
         }
       })}
-    </>
+    </div>
   );
 };
 

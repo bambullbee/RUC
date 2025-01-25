@@ -21,7 +21,7 @@ const Messanger = () => {
       aria-label="Диалоговое окно"
       ref={messanger}
     >
-      {mainNav === "test" ? <Test ref={messanger} /> : <Life />}
+      {mainNav === "test" ? <Test ref={messanger} /> : <Life ref={messanger} />}
     </section>
   );
 };

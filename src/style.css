@@ -1010,6 +1010,7 @@ main {
 .profile__item__inner {
   margin: auto;
   text-align: center;
+  padding: 10px;
 }
 
 .profile-avatar__1 {
@@ -1199,6 +1200,46 @@ main {
   padding: 10px;
 }
 
+/* PROGRESS ALERT  */
+.progress-alert {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  display: flex;
+  font-size: var(--fz1);
+}
+.progress-alert__inner {
+  margin: auto;
+}
+
+.progress-alert__inner p {
+  text-align: center;
+}
+
+.progress-buttons {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-around;
+}
+.progress-button {
+  width: 30%;
+  height: 75px;
+  padding: 10px;
+  cursor: pointer;
+  background-color: var(--third-color);
+  border: 3px solid var(--secondary-color);
+  outline: none;
+  font-family: "Jost", sans-serif;
+  font-size: var(--fz1);
+  font-weight: 500;
+  color: var(--secondary-color);
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
 /* MEDIAQUERIES */
 
 @media (min-aspect-ratio: 3/5) {
@@ -1297,6 +1338,12 @@ main {
   }
   .scroll-prevent-btn {
     right: 25px;
+  }
+  .about-block {
+    width: 95%;
+  }
+  .paragraph {
+    width: 95%;
   }
 }
 
@@ -1689,6 +1736,11 @@ main {
     background-color: var(--third-HO-color);
     transform: translateY(-5px);
     box-shadow: 0px 5px var(--primary-color);
+  }
+  .progress-button:hover {
+    background-color: var(--secondary-color);
+    color: var(--third-color);
+    border-color: var(--third-color);
   }
 }
 

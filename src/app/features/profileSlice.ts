@@ -74,6 +74,17 @@ const initialState: initialStateI = {
   sex,
 };
 
+const veryInitialState: initialStateI = {
+  species: null,
+  mood: null,
+  photo: { isPhoto: false, url: "", loading: "idle", error: null },
+  paw: null,
+  loyalty: 0,
+  isVisible: false,
+  bannerUsed: false,
+  sex: "male",
+};
+
 const profileSlice = createSlice({
   name: "profile",
   initialState,
@@ -88,6 +99,7 @@ const profileSlice = createSlice({
     },
     changePaw(state) {
       if (state.paw === null) {
+        localStorage.setItem("loyalty", (state.loyalty + 1).toString());
         state.loyalty += 1;
       }
       const paw: paw = [
@@ -120,12 +132,13 @@ const profileSlice = createSlice({
     },
     resetProfile() {
       localStorage.clear();
-      return initialState;
+      return veryInitialState;
     },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchCatPhoto.fulfilled, (state, action) => {
       if (state.photo.url === "") {
+        localStorage.setItem("loyalty", (state.loyalty + 1).toString());
         state.loyalty += 1;
       }
       state.photo.loading = "idle";

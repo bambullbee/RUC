@@ -1,9 +1,22 @@
-import React, { useState } from "react";
+import React, {
+  forwardRef,
+  memo,
+  MutableRefObject,
+  RefObject,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import LifeBlocks from "./components/LifeBlocks";
 
-const Life = () => {
+const Life = ({}, ref: MutableRefObject<HTMLElement>) => {
+  const lifeBlock: RefObject<HTMLDivElement> = useRef(null);
+  useEffect(() => {
+    console.log("scroll", lifeBlock);
+    ref.current.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
   return (
-    <>
+    <div className="life">
       {" "}
       <div className="sms-wrapper">
         <div className="sms left-sms">
@@ -14,8 +27,8 @@ const Life = () => {
         </div>
       </div>
       <LifeBlocks />
-    </>
+    </div>
   );
 };
 
-export default Life;
+export default memo(forwardRef(Life));

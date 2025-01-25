@@ -7,13 +7,20 @@ import GlobalBg from "./glogalBG/components/GlobalBg";
 import { useEffect, useState } from "react";
 import Banner from "@/entities/Banner/components/Banner";
 
-import { changeCurrentLocation } from "./features/curerntLocationSlice";
+import {
+  changeCurrentLocation,
+  resetCur,
+} from "./features/curerntLocationSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./store";
 import { currentLocation } from "@/shared/types";
 import Profile from "@/widgets/profile/Profile";
-import { changeIsScrolling } from "./features/mainStateSlice";
+import { changeIsScrolling, resetMain } from "./features/mainStateSlice";
 import { About } from "@/widgets/about";
+import { resetNav } from "./features/navigationSlice";
+import { resetProfile } from "./features/profileSlice";
+
+const isProgress = localStorage.getItem("test") ? true : false;
 
 const App = () => {
   const isScrolling = useSelector(
@@ -25,6 +32,7 @@ const App = () => {
   const mainNav = useSelector(
     (state: RootState) => state.navigation.currentLocation
   );
+  const [progress, changeProgress] = useState(isProgress);
   const dispatch = useDispatch();
   useEffect(() => {
     function resizeHandler() {
@@ -80,6 +88,35 @@ const App = () => {
         <Banner isScrolling={isScrolling} />
         <Profile />
         <About />
+        {progress ? (
+          <div className="progress-alert">
+            <div className="progress-alert__inner">
+              <p>У Вас есть сохраненный прогресс. Желаете продолжить? </p>
+              <div className="progress-buttons">
+                <button
+                  className="progress-button"
+                  onClick={() => changeProgress(false)}
+                >
+                  Да
+                </button>
+                <button
+                  className="progress-button"
+                  onClick={() => {
+                    changeProgress(false);
+                    dispatch(resetProfile());
+                    dispatch(resetCur());
+                    dispatch(resetMain());
+                    dispatch(resetNav());
+                  }}
+                >
+                  Нет
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : (
+          ""
+        )}
       </main>
       <GlobalBg />
     </>

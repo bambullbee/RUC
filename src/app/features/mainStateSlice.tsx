@@ -7,9 +7,15 @@ let theme: "dark" | "light" =
   window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
     ? "dark"
     : "light";
-if (theme === "dark") {
-  body.classList.add("dark");
-}
+
+const veryInitialState: initialMainState = {
+  theme,
+  personality: "human",
+  typingSpeed: 30,
+  isTyping: true,
+  isScrolling: touchOrMouse === "iPhone" ? true : false,
+  restarted: 0,
+};
 
 const personality =
   localStorage.getItem("personality") !== null
@@ -23,6 +29,9 @@ theme =
   localStorage.getItem("theme") !== null
     ? (localStorage.getItem("theme") as "dark" | "light")
     : theme;
+if (theme === "dark") {
+  body.classList.add("dark");
+}
 const isTyping =
   localStorage.getItem("isTyping") !== null
     ? !!localStorage.getItem("isTyping")
@@ -34,6 +43,7 @@ type initialMainState = {
   typingSpeed: 20 | 30 | 40;
   isTyping: boolean;
   isScrolling: boolean;
+  restarted: number;
 };
 
 const initialState: initialMainState = {
@@ -42,6 +52,7 @@ const initialState: initialMainState = {
   typingSpeed,
   isTyping,
   isScrolling: touchOrMouse === "iPhone" ? true : false,
+  restarted: 0,
 };
 
 const mainStateSlice = createSlice({
@@ -82,7 +93,7 @@ const mainStateSlice = createSlice({
     },
     resetMain() {
       localStorage.clear();
-      return initialState;
+      return { ...veryInitialState, restarted: Math.random() };
     },
   },
 });
