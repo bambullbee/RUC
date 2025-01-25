@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --env mode=production",
+    "build:dev": "webpack --env mode=development",
+    "build:prod": "webpack --env mode=production",
+    "build:mobile": "webpack --env mode=production --env platform=mobile",
+    "build:desktop": "webpack --env mode=production --env platform=desktop",
     "build:prod:analyzer": "webpack --env mode=production analyzer=true",
     "start": "webpack serve --env port=5000 mode=development"
   },

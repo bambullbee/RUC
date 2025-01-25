@@ -53,7 +53,7 @@ export function buildPlugins(options: BuildOptions): Configuration["plugins"] {
     );
   }
 
-  if (analyzer === "true") plugins.push(new BundleAnalyzerPlugin());
+  // if (analyzer === "true") plugins.push(new BundleAnalyzerPlugin());
 
   return plugins;
 }
