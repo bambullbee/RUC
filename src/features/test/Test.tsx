@@ -167,10 +167,10 @@ const Test = ({}: testI, ref: MutableRefObject<HTMLElement>) => {
       answerNum: index as 0 | 1 | 2,
       fixed: false,
     };
-    if (touchOrMouse === "wheel") {
-      messangerInner.current.style.minHeight =
-        messangerInner.current.scrollHeight + "px";
-    }
+
+    messangerInner.current.style.minHeight =
+      messangerInner.current.scrollHeight + "px";
+
     setMessages(copy);
     dispatch(inPartMove(index as 0 | 1 | 2));
   }
