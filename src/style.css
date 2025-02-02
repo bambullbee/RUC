@@ -48,8 +48,6 @@ body {
 }
 
 #root {
-  height: 110vh;
-  background-color: red;
   overflow-y: scroll;
 }
 
