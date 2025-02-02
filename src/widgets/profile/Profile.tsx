@@ -12,6 +12,7 @@ import QuestionMarkSVG from "./UI/QuestionMarkSVG";
 import PawSVG from "./UI/PawSVG";
 import ProfilePhoto from "./UI/ProfilePhoto";
 import { useAppDispatch } from "@/shared/withTypes/useDispatch";
+import { MobileBottomMargin } from "@/shared";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -89,6 +90,7 @@ const Profile = () => {
             Нажимай на поле фото или лапки, чтобы получить актуальную информацию
           </div>
         )}
+        <MobileBottomMargin />
       </div>
     </div>
   );

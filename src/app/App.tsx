@@ -20,6 +20,7 @@ import { About } from "@/widgets/about";
 import { resetNav } from "./features/navigationSlice";
 import { resetProfile } from "./features/profileSlice";
 import touchOrMouse from "@/shared/features/touchOrMouseOrIphone";
+import { MobileBottomMargin } from "@/shared";
 
 const isProgress = localStorage.getItem("test") ? true : false;
 
@@ -120,13 +121,7 @@ const App = () => {
           ""
         )}
       </main>
-      <div
-        className={
-          touchOrMouse === "touchmove" || touchOrMouse === "iPhone"
-            ? "phone-bottom"
-            : ""
-        }
-      ></div>
+      <MobileBottomMargin />
       <GlobalBg />
     </>
   );

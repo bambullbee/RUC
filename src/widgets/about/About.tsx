@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import AboutBlock from "./components/AboutBlock";
 import BackButton from "./components/BackButton";
 import { localData } from "./data/data";
+import { MobileBottomMargin } from "@/shared";
 
 const About = () => {
   const currentLocation = useSelector(
@@ -21,6 +22,7 @@ const About = () => {
       {localData.map((block) => {
         return <AboutBlock title={block.title} info={block.info} />;
       })}
+      <MobileBottomMargin />
     </section>
   );
 };
