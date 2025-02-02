@@ -22,8 +22,8 @@ interface testI {}
 interface messageI {
   type: setCurrentMessageTypeT;
   text: string | [string, string, string];
-  previousMessageSpeed?: 20 | 30 | 300;
-  speed?: 20 | 30 | 300;
+  previousMessageSpeed?: 20 | 30 | 100;
+  speed?: 20 | 30 | 100;
   lastMessageLength?: number;
   answerNum?: 0 | 1 | 2;
   isTyping?: boolean;
