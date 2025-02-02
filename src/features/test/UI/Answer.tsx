@@ -48,6 +48,9 @@ const Answer = (
     }, 800);
   }, []);
   useEffect(() => {
+    if (!input.current) {
+      return undefined;
+    }
     function click() {
       if (species === "") {
         input.current.focus();
