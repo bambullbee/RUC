@@ -45,18 +45,20 @@ const Message = (
     }
     return () => clearTimeout(timer);
   }, []);
+  function scroll() {
+    if (!isScrolling) {
+      ref.current.scrollTo({
+        top: ref.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  }
 
   //typing effect
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>;
     if (isVisible) {
       if (currentText.length !== text.length) {
-        if (!isScrolling && touchOrMouse === "wheel") {
-          ref.current.scrollTo({
-            top: ref.current.scrollHeight,
-            behavior: "smooth",
-          });
-        }
         timer = setTimeout(() => {
           setCurrentText((prevState: string) => {
             if (text[prevState.length] === "s") {
@@ -78,6 +80,7 @@ const Message = (
             }
             return prevState + text[prevState.length];
           });
+          scroll();
         }, speed);
       } else {
         if (!fixed) {
