@@ -60,7 +60,7 @@ const App = () => {
       <main>
         <Messanger />
         <Widget />
-        {mainNav === "test" && touchOrMouse === "wheel" ? (
+        {mainNav === "test" ? (
           <button
             className={`scroll-prevent-btn ${
               currentLocation === "about" ? "dialogue__out" : ""
@@ -86,11 +86,8 @@ const App = () => {
           ""
         )}
 
-        {touchOrMouse === "touchmove" || touchOrMouse === "iPhone" ? (
-          ""
-        ) : (
-          <Banner isScrolling={isScrolling} />
-        )}
+        <Banner isScrolling={isScrolling} />
+
         <Profile />
         <About />
         {progress ? (
