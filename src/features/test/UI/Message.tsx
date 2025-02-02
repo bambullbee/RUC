@@ -78,12 +78,12 @@ const Message = (
                 return " " + prevState;
               }
             }
+            scroll();
             return prevState + text[prevState.length];
           });
         }, speed);
       } else {
         if (!fixed) {
-          scroll();
           endHandler(type);
         }
       }
