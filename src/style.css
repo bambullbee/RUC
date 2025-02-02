@@ -48,7 +48,8 @@ body {
 }
 
 #root {
-  height: calc(100vh + 400px);
+  height: 110vh;
+  background-color: red;
   overflow-y: scroll;
 }
 
