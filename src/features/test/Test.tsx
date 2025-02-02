@@ -106,9 +106,12 @@ const Test = ({}: testI, ref: MutableRefObject<HTMLElement>) => {
     }, 100);
   }, [isRestarted]);
 
-  function endOfMessageHandler(type: setCurrentMessageTypeT) {
+  function endOfMessageHandler(type: setCurrentMessageTypeT): void {
     const copy = [...messages];
     let part;
+    if (!data[messages[messages.length - 1].part + 1] && type === "response") {
+      return undefined;
+    }
     if (type === "question") {
       setMessages(() => {
         const block = data[copy[copy.length - 1].part].na;

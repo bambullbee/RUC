@@ -208,26 +208,26 @@ a span {
 @keyframes paw-move-up {
   0%,
   50% {
-    display: none;
+    opacity: 0;
   }
   51%,
   100% {
-    display: block;
+    opacity: 1;
   }
 }
 
 @keyframes paw-move-down {
   0%,
   50% {
-    display: block;
+    opacity: 1;
   }
   51%,
   100% {
-    display: none;
+    opacity: 0;
   }
 }
 
-@keyframes paw-left-bg {
+/* @keyframes paw-left-bg {
   0%,
   50% {
     fill: none;
@@ -236,9 +236,9 @@ a span {
   100% {
     fill: block;
   }
-}
+} */
 
-@keyframes paw-right-bg {
+/* @keyframes paw-right-bg {
   0%,
   50% {
     display: none;
@@ -247,7 +247,7 @@ a span {
   100% {
     display: block;
   }
-}
+} */
 
 /* APP */
 
@@ -658,22 +658,22 @@ main {
 @keyframes opened-mouse-anime {
   0%,
   50% {
-    display: none;
+    opacity: 0;
   }
   51%,
   100% {
-    display: block;
+    opacity: 1;
   }
 }
 
 @keyframes closed-mouse-anime {
   0%,
   50% {
-    display: block;
+    opacity: 1;
   }
   51%,
   100% {
-    display: none;
+    opacity: 0;
   }
 }
 
