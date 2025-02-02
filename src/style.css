@@ -46,6 +46,7 @@ body {
   width: 100vw;
   min-height: 300px;
   overflow: hidden;
+  background-color: red;
 }
 
 #root {
