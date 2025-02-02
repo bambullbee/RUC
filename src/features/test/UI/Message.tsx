@@ -4,6 +4,7 @@ import { MutableRefObject } from "react";
 import { useSelector } from "react-redux";
 import { processStringBySex } from "@/features/test/features/processStringBySex";
 import { setCurrentMessageTypeT } from "@/features/test/types/types";
+import touchOrMouse from "@/shared/features/touchOrMouseOrIphone";
 
 type className = "right-sms" | "left-sms";
 
@@ -50,7 +51,7 @@ const Message = (
     let timer: ReturnType<typeof setTimeout>;
     if (isVisible) {
       if (currentText.length !== text.length) {
-        if (!isScrolling) {
+        if (!isScrolling && touchOrMouse === "wheel") {
           ref.current.scrollTo({
             top: ref.current.scrollHeight,
             behavior: "smooth",

@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
 import { changeLoyalty, changeSpecies } from "@/app/features/profileSlice";
 import { extraI } from "../types/types";
+import touchOrMouse from "@/shared/features/touchOrMouseOrIphone";
 
 interface answerI {
   text: string;
@@ -35,10 +36,12 @@ const Answer = (
   useEffect(() => {
     const timer = setTimeout(() => {
       if (!isScrolling) {
-        ref.current.scrollTo({
-          top: ref.current.scrollHeight,
-          behavior: "smooth",
-        });
+        if (touchOrMouse === "wheel") {
+          ref.current.scrollTo({
+            top: ref.current.scrollHeight,
+            behavior: "smooth",
+          });
+        }
       }
     }, 800);
   }, []);
