@@ -88,7 +88,10 @@ const Test = ({}: testI, ref: MutableRefObject<HTMLElement>) => {
           });
           curPart += 1;
         }
-        if (currentMessangerPosition.curLocPart.part === curPart) {
+        if (
+          currentMessangerPosition.curLocPart.part === curPart &&
+          data[curPart]
+        ) {
           messagesCopy.push({
             type: "question",
             isTyping,
