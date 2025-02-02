@@ -48,7 +48,6 @@ body {
 
 #root {
   height: calc(100vh + 400px);
-  overflow-y: scroll;
 }
 
 .aria-heading {
