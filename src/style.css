@@ -42,9 +42,13 @@ body {
   letter-spacing: 2px;
   font-family: "Jost", sans-serif;
   position: relative;
-  height: calc(100vh + 100px);
   min-height: 300px;
   overflow: hidden;
+}
+
+#root {
+  height: calc(100vh + 100px);
+  overflow-y: scroll;
 }
 
 .aria-heading {
@@ -1809,4 +1813,8 @@ body.dark .cat-circle.light {
   100% {
     transform: scale(100%);
   }
+}
+
+.phone-bottom {
+  height: 100px;
 }
