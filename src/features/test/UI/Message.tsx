@@ -1,5 +1,12 @@
 import { RootState } from "@/app/store";
-import React, { forwardRef, memo, useEffect, useRef, useState } from "react";
+import React, {
+  forwardRef,
+  memo,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { MutableRefObject } from "react";
 import { useSelector } from "react-redux";
 import { processStringBySex } from "@/features/test/features/processStringBySex";
@@ -45,15 +52,24 @@ const Message = (
     }
     return () => clearTimeout(timer);
   }, []);
-  function scroll() {
+
+  const [isReady, setIsReady] = useState(300);
+
+  function scroll(speed: number): ReturnType<typeof setTimeout> {
     return setTimeout(() => {
       if (!isScrolling) {
-        ref.current.scrollTo({
-          top: ref.current.scrollHeight,
-          behavior: "smooth",
-        });
+        if (isReady > 40) {
+          setIsReady((state) => state - speed);
+          return undefined;
+        } else {
+          setIsReady(300);
+          ref.current.scrollTo({
+            top: ref.current.scrollHeight,
+            behavior: "smooth",
+          });
+        }
       }
-    }, 300);
+    }, speed);
   }
 
   //typing effect
@@ -81,7 +97,7 @@ const Message = (
                 return " " + prevState;
               }
             }
-            timer2 = scroll();
+            scroll(speed);
             return prevState + text[prevState.length];
           });
         }, speed);
