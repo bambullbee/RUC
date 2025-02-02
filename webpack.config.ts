@@ -18,7 +18,7 @@ interface EnvVariables {
 export default (env: EnvVariables) => {
   const paths = {
     entry: path.resolve(__dirname, "src", "index.tsx"),
-    output: path.resolve(__dirname, "build"),
+    output: path.resolve(__dirname, "dist"),
     html: path.resolve(__dirname, "public", "index.html"),
     src: path.resolve(__dirname, "src"),
     public: path.resolve(__dirname, "public"),
