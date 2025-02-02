@@ -47,7 +47,7 @@ interface initialStateI {
 
 const species = localStorage.getItem("species")
   ? localStorage.getItem("species")
-  : null;
+  : "";
 const mood = localStorage.getItem("mood") ? localStorage.getItem("mood") : null;
 const url = localStorage.getItem("url") ? localStorage.getItem("url") : "";
 const paw = localStorage.getItem("paw")
@@ -75,7 +75,7 @@ const initialState: initialStateI = {
 };
 
 const veryInitialState: initialStateI = {
-  species: null,
+  species: "",
   mood: null,
   photo: { isPhoto: false, url: "", loading: "idle", error: null },
   paw: null,

@@ -12,6 +12,7 @@ import { RootState } from "@/app/store";
 import { changeLoyalty, changeSpecies } from "@/app/features/profileSlice";
 import { extraI } from "../types/types";
 import touchOrMouse from "@/shared/features/touchOrMouseOrIphone";
+import { spec } from "node:test/reporters";
 
 interface answerI {
   text: string;
@@ -34,6 +35,7 @@ const Answer = (
   const [isVisible, setIsVisible] = useState(false);
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 500);
+    // WTF
     return () => clearTimeout(timer);
   }, []);
   useEffect(() => {
@@ -48,20 +50,26 @@ const Answer = (
     }, 800);
   }, []);
   useEffect(() => {
-    if (!input.current) {
-      return undefined;
-    }
     function click() {
       if (species === "") {
+        console.log("fired");
         input.current.focus();
       }
     }
-
-    if (extra?.t === "input") {
-      answer.current.addEventListaner("click", click);
+    if (isVisible) {
+      if (!input.current) {
+        return undefined;
+      }
+      if (extra?.t === "input") {
+        answer.current.addEventListener("click", click);
+      }
     }
-    return () => answer.current.removeEventListaner("click", click);
-  }, []);
+    return () => {
+      if (answer.current) {
+        answer.current.removeEventListener("click", click);
+      }
+    };
+  }, [isVisible]);
   return (
     <>
       {isVisible ? (
@@ -78,6 +86,11 @@ const Answer = (
                 }
                 if (extra.t === "rate") {
                   dispatch(changeLoyalty(extra.v));
+                }
+              }
+              if (extra?.t === "input") {
+                if (species === "") {
+                  return undefined;
                 }
               }
               onClick(index);
