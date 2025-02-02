@@ -23,7 +23,7 @@ const personality =
     : "human";
 const typingSpeed =
   localStorage.getItem("typingSpeed") !== null
-    ? (parseInt(localStorage.getItem("typingSpeed")) as 20 | 30 | 100)
+    ? (parseInt(localStorage.getItem("typingSpeed")) as 20 | 30 | 300)
     : 30;
 theme =
   localStorage.getItem("theme") !== null
@@ -40,7 +40,7 @@ const isTyping =
 type initialMainState = {
   theme: "dark" | "light";
   personality: string;
-  typingSpeed: 20 | 30 | 100;
+  typingSpeed: 20 | 30 | 300;
   isTyping: boolean;
   isScrolling: boolean;
   restarted: number;
@@ -73,7 +73,7 @@ const mainStateSlice = createSlice({
       localStorage.setItem("personality", action.payload);
     },
     changeTypingSpeed(state) {
-      if (state.typingSpeed === 100) {
+      if (state.typingSpeed === 300) {
         state.typingSpeed = 20;
       } else {
         state.typingSpeed += 10;
