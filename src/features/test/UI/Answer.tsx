@@ -4,6 +4,7 @@ import React, {
   memo,
   forwardRef,
   MutableRefObject,
+  useRef,
 } from "react";
 import { processStringBySex } from "../features/processStringBySex";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,6 +24,8 @@ const Answer = (
   { text, index, onClick, extra }: answerI,
   ref: MutableRefObject<HTMLElement>
 ) => {
+  const answer = useRef(null);
+  const input = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
   const isScrolling = useSelector(
     (state: RootState) => state.mainState.isScrolling
@@ -44,6 +47,18 @@ const Answer = (
       }
     }, 800);
   }, []);
+  useEffect(() => {
+    function click() {
+      if (species === "") {
+        input.current.focus();
+      }
+    }
+
+    if (extra?.t === "input") {
+      answer.current.addEventListaner("click", click);
+    }
+    return () => answer.current.removeEventListaner("click", click);
+  }, []);
   return (
     <>
       {isVisible ? (
@@ -64,6 +79,7 @@ const Answer = (
               }
               onClick(index);
             }}
+            ref={answer}
           >
             {processStringBySex(text)}
           </button>
@@ -75,6 +91,7 @@ const Answer = (
               onChange={(e) => {
                 dispatch(changeSpecies(e.target.value));
               }}
+              ref={input}
             ></input>
           ) : (
             ""
