@@ -5,14 +5,14 @@ import { Provider } from "react-redux";
 import { store } from "./app/store";
 import App from "./app/App";
 
-document
-  .querySelector("meta[name=viewport]")
-  .setAttribute(
-    "content",
-    "width=device-width, user-scalable=no, initial-scale=" +
-      1 / window.devicePixelRatio +
-      ""
-  );
+// document
+//   .querySelector("meta[name=viewport]")
+//   .setAttribute(
+//     "content",
+//     "width=device-width, user-scalable=no, initial-scale=" +
+//       1 / window.devicePixelRatio +
+//       ""
+//   );
 
 import applyTheme from "./theme";
 
