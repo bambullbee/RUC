@@ -35,13 +35,12 @@ const Answer = (
   }, []);
   useEffect(() => {
     const timer = setTimeout(() => {
+      // if (!isScrolling && touchOrMouse === "wheel") {
       if (!isScrolling) {
-        if (touchOrMouse === "wheel") {
-          ref.current.scrollTo({
-            top: ref.current.scrollHeight,
-            behavior: "smooth",
-          });
-        }
+        ref.current.scrollTo({
+          top: ref.current.scrollHeight,
+          behavior: "smooth",
+        });
       }
     }, 800);
   }, []);
