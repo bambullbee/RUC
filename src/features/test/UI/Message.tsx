@@ -80,10 +80,10 @@ const Message = (
             }
             return prevState + text[prevState.length];
           });
-          scroll();
         }, speed);
       } else {
         if (!fixed) {
+          scroll();
           endHandler(type);
         }
       }
