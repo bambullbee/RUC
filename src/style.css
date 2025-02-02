@@ -42,12 +42,14 @@ body {
   letter-spacing: 2px;
   font-family: "Jost", sans-serif;
   position: relative;
+  height: 100vh;
   min-height: 300px;
   overflow: hidden;
 }
 
 #root {
   height: calc(100vh + 400px);
+  overflow-y: auto;
 }
 
 .aria-heading {
