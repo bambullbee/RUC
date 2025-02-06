@@ -158,7 +158,16 @@ const Test = ({}: testI, ref: MutableRefObject<HTMLElement>) => {
 
   useEffect(() => {
     function wheelOrTouchmoveHandler() {
-      dispatch(changeIsScrolling(true));
+      setTimeout(() => {
+        if (
+          messanger.current.scrollTop + messanger.current.clientHeight >
+          messanger.current.scrollHeight - 5
+        ) {
+          dispatch(changeIsScrolling(false));
+        } else {
+          dispatch(changeIsScrolling(true));
+        }
+      }, 175);
     }
     if (touchOrMouse === "wheel") {
       messanger.current?.addEventListener("wheel", wheelOrTouchmoveHandler);

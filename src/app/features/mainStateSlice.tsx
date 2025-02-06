@@ -84,12 +84,8 @@ const mainStateSlice = createSlice({
       state.isTyping = action.payload;
       localStorage.setItem("isTyping", !action.payload ? "" : "true");
     },
-    changeIsScrolling(state, action: PayloadAction<boolean> = undefined) {
-      if (action.payload) {
-        state.isScrolling = action.payload;
-      } else {
-        state.isScrolling = !state.isScrolling;
-      }
+    changeIsScrolling(state, action: PayloadAction<boolean>) {
+      state.isScrolling = action.payload;
     },
     resetMain() {
       localStorage.clear();

@@ -10,22 +10,20 @@ interface bannerPropsI {
 }
 
 const Banner = ({ isScrolling }: bannerPropsI) => {
-  const [wasAppeared, setWasAppeared] = useState(
-    touchOrMouse === "iPhone" ? true : false
-  );
+  const [wasAppeared, setWasAppeared] = useState(false);
   const currentLocation = useSelector(
     (state: RootState) => state.currentLocation
   ) as currentLocation;
 
-  return isScrolling && !wasAppeared ? (
+  return !wasAppeared ? (
     <div
       className={`banner ${currentLocation === "about" ? "banner__out" : ""}`}
       onClick={() => {
         setWasAppeared(true);
       }}
     >
-      Нажимай на кнопку справа, чтобы переключаться между режимами
-      авто-прокрутки. И нажимай на меня, чтобы убрать эту мешающую штуку.
+      Нажимай на кнопку в правом верхнем углу окна с чатом, чтобы переключаться
+      между режимами авто-прокрутки. Нажатие на меня скроет подсказку.
     </div>
   ) : (
     ""

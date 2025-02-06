@@ -54,7 +54,6 @@ const App = () => {
     window.addEventListener("resize", resizeHandler);
     return () => window.removeEventListener("resize", resizeHandler);
   }, []);
-  const sex = useSelector((state: RootState) => state.profile.sex);
   return (
     <>
       <Header />
@@ -87,7 +86,7 @@ const App = () => {
           ""
         )}
 
-        <Banner isScrolling={isScrolling} />
+        {touchOrMouse === "iPhone" ? <Banner isScrolling={isScrolling} /> : ""}
 
         <Profile />
         <About />
