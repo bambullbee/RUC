@@ -23,14 +23,9 @@ interface testI {}
 interface messageI {
   type: setCurrentMessageTypeT;
   text: string | [string, string, string];
-  previousMessageSpeed?: 20 | 30 | 40;
-  speed?: 20 | 30 | 40;
-  lastMessageLength?: number;
   answerNum?: 0 | 1 | 2;
-  isTyping?: boolean;
   part: number;
   extra?: extraI[];
-  fixed: boolean;
 }
 interface messagesI {
   text: string | [string, string, string];
@@ -47,8 +42,6 @@ const Test = ({}: testI, ref: MutableRefObject<HTMLElement>) => {
     curLocPartTitle: state.navigation.currentLocation,
     curLocPartTitleNum: state.navigation.currentLocation === "test" ? 100 : 200,
   }));
-  const speed = useSelector((state: RootState) => state.mainState.typingSpeed);
-  const isTyping = useSelector((state: RootState) => state.mainState.isTyping);
   const [messages, setMessages] = useState<messagesI[]>([]);
   const species = useSelector((state: RootState) => state.profile.species);
   const isRestarted = useSelector(
@@ -90,13 +83,8 @@ const Test = ({}: testI, ref: MutableRefObject<HTMLElement>) => {
           setCurrentMessage([
             {
               type: "question",
-              isTyping,
-              speed,
-              lastMessageLength:
-                messagesCopy[messagesCopy.length - 1]?.text.length,
               part: curPart,
               text: data[curPart].q,
-              fixed: false,
             },
           ]);
         }
@@ -126,7 +114,6 @@ const Test = ({}: testI, ref: MutableRefObject<HTMLElement>) => {
           part: currentMessage[0].part,
           text: [block[0].a, block[1].a, block[2].a],
           extra: [block[0].extra, block[1].extra, block[2].extra],
-          fixed: false,
         },
       ];
     }
@@ -137,9 +124,6 @@ const Test = ({}: testI, ref: MutableRefObject<HTMLElement>) => {
           text: data[part].na[currentMessage[0].answerNum]?.r,
           part,
           type: "response",
-          isTyping,
-          speed,
-          fixed: false,
         },
       ];
     }
@@ -150,11 +134,6 @@ const Test = ({}: testI, ref: MutableRefObject<HTMLElement>) => {
           text: data[part].q,
           type: "question",
           part,
-          speed,
-          isTyping,
-          previousMessageSpeed: currentMessage[0].speed,
-          lastMessageLength: currentMessage[0].text.length,
-          fixed: false,
         },
       ];
     }
@@ -172,7 +151,6 @@ const Test = ({}: testI, ref: MutableRefObject<HTMLElement>) => {
           (blockNum === 102 && index === 2 ? species : ""),
         part: blockNum,
         answerNum: index as 0 | 1 | 2,
-        fixed: false,
       },
     ]);
     dispatch(inPartMove(index as 0 | 1 | 2));
@@ -208,12 +186,8 @@ const Test = ({}: testI, ref: MutableRefObject<HTMLElement>) => {
               type={el.type}
               text={el.text as string}
               className="left-sms"
-              isTyping={el.isTyping}
-              speed={el.speed}
-              lastMessageLength={el.lastMessageLength}
               endHandler={endOfMessageHandler}
               ref={messanger}
-              fixed={el.fixed}
             />
           );
         }
@@ -242,7 +216,6 @@ const Test = ({}: testI, ref: MutableRefObject<HTMLElement>) => {
               className="right-sms"
               endHandler={endOfMessageHandler}
               ref={messanger}
-              fixed={el.fixed}
             />
           );
         }
@@ -252,11 +225,8 @@ const Test = ({}: testI, ref: MutableRefObject<HTMLElement>) => {
               text={el.text as string}
               type={el.type}
               className="left-sms"
-              isTyping={el.isTyping}
-              speed={el.speed}
               endHandler={endOfMessageHandler}
               ref={messanger}
-              fixed={el.fixed}
             />
           );
         }

@@ -18,38 +18,34 @@ type className = "right-sms" | "left-sms";
 interface MessagePropsI {
   text: string;
   className: string;
-  isTyping?: boolean;
-  lastMessageLength?: number;
-  speed?: number;
   type: setCurrentMessageTypeT;
   endHandler: (type: string) => void;
-  fixed: boolean;
 }
 
 const Message = (
-  { text, className, speed, isTyping, type, endHandler, fixed }: MessagePropsI,
+  { text, className, type, endHandler }: MessagePropsI,
   ref: MutableRefObject<HTMLElement>
 ) => {
+  const speed = useSelector((state: RootState) => {
+    return state.mainState.typingSpeed;
+  });
+  const isTyping = useSelector((state: RootState) => {
+    return state.mainState.isTyping;
+  });
   const [isVisible, setIsVisible] = useState(false);
   const [currentText, setCurrentText] = useState(
-    className === "left-sms" && isTyping && !fixed
-      ? ""
-      : processStringBySex(text)
+    className === "left-sms" && isTyping ? "" : processStringBySex(text)
   );
   const sex = useSelector((state: RootState) => state.profile.sex);
   const isScrolling = useSelector(
     (state: RootState) => state.mainState.isScrolling
   );
 
-  // make visible
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>;
-    //micro delay for each message
-    if (fixed) {
-      setIsVisible(true);
-    } else {
-      timer = setTimeout(() => setIsVisible(true), 300);
-    }
+
+    timer = setTimeout(() => setIsVisible(true), 300);
+
     return () => clearTimeout(timer);
   }, []);
 
@@ -76,7 +72,7 @@ const Message = (
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>;
     let timer2: ReturnType<typeof setTimeout>;
-    if (isVisible) {
+    if (isVisible && isTyping) {
       if (currentText.length !== text.length) {
         timer = setTimeout(() => {
           setCurrentText((prevState: string) => {
@@ -102,10 +98,11 @@ const Message = (
           });
         }, speed);
       } else {
-        if (!fixed) {
-          endHandler(type);
-        }
+        endHandler(type);
       }
+    } else if (!isTyping) {
+      setCurrentText(processStringBySex(text));
+      endHandler(type);
     }
     return () => {
       clearTimeout(timer);
