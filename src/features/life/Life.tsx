@@ -10,9 +10,7 @@ import React, {
 import LifeBlocks from "./components/LifeBlocks";
 
 const Life = ({}, ref: MutableRefObject<HTMLElement>) => {
-  const lifeBlock: RefObject<HTMLDivElement> = useRef(null);
   useEffect(() => {
-    console.log("scroll", lifeBlock);
     ref.current.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
   return (

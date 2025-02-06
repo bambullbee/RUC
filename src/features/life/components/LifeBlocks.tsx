@@ -56,7 +56,9 @@ const LifeBlocks = () => {
         } else {
           return (
             <div className="sms-wrapper">
-              <div className="sms left-sms">{text}</div>
+              <div className="sms left-sms current-sms left-current-sms">
+                {text}
+              </div>
             </div>
           );
         }
