@@ -117,7 +117,15 @@ const Message = (
     <>
       {isVisible ? (
         <div className="sms-wrapper">
-          <div className={`${"sms " + className}`}>{currentText}</div>
+          <div
+            className={`${
+              "sms current-sms " +
+              className +
+              (className === "left-sms" ? " left-current-sms" : " ")
+            }`}
+          >
+            {currentText}
+          </div>
         </div>
       ) : (
         ""

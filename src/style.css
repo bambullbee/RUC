@@ -564,6 +564,13 @@ main {
   border: 1px solid var(--secondary-color);
   border-radius: 30px;
   transition: box-shadow 0.25s, outline 0.25s;
+}
+
+.left-current-sms {
+  opacity: 0;
+}
+
+.current-sms {
   animation: pop-up-sms 0.3s cubic-bezier(0, 0.87, 0.45, 0.74);
 }
 
@@ -585,7 +592,6 @@ main {
 }
 
 .left-sms {
-  opacity: 0;
   margin-right: 10%;
   animation-fill-mode: forwards;
 }

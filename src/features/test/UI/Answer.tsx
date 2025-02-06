@@ -35,12 +35,10 @@ const Answer = (
   const [isVisible, setIsVisible] = useState(false);
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 500);
-    // WTF
     return () => clearTimeout(timer);
   }, []);
   useEffect(() => {
     const timer = setTimeout(() => {
-      // if (!isScrolling && touchOrMouse === "wheel") {
       if (!isScrolling) {
         ref.current.scrollTo({
           top: ref.current.scrollHeight,
@@ -52,7 +50,6 @@ const Answer = (
   useEffect(() => {
     function click() {
       if (species === "") {
-        console.log("fired");
         input.current.focus();
       }
     }
